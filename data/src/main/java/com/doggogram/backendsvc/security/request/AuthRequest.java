@@ -1,4 +1,4 @@
-package com.doggogram.backendsvc.security;
+package com.doggogram.backendsvc.security.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.doggogram.backendsvc.services.impl;
 
 import com.doggogram.backendsvc.repositories.UserRepository;
-import com.doggogram.backendsvc.security.JwtTokenResponse;
+import com.doggogram.backendsvc.security.responses.JwtTokenResponse;
 import com.doggogram.backendsvc.services.AuthService;
 import com.doggogram.backendsvc.services.JwtTokenService;
 import org.springframework.security.crypto.password.PasswordEncoder;

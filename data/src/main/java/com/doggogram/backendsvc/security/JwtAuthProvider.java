@@ -1,5 +1,6 @@
 package com.doggogram.backendsvc.security;
 
+import com.doggogram.backendsvc.security.exceptions.JwtAuthException;
 import com.doggogram.backendsvc.services.JwtTokenService;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
