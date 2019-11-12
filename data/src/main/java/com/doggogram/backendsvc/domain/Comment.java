@@ -16,15 +16,13 @@ public class Comment {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "IMAGE_ID")
+    @Column (name = "COMMENT_ID")
     private Long id;
 
     @OneToOne (fetch = FetchType.EAGER)
-    @Column (name = "Author")
     private User user;
 
     @OneToOne (fetch = FetchType.EAGER)
-    @Column (name = "IMAGE")
     private Image image;
 
     @Column (name = "COMMENT")
