@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Data
 @Entity (name = "IMAGE")
@@ -17,12 +18,19 @@ public class Image {
     @Column (name = "IMAGE_ID")
     private Long id;
 
-    @Column (name = "URL")
+    @Column (name = "IMAGE_URL")
     private String url;
 
-    @Column (name = "LIKES")
+    @Column (name = "IMAGE_TITLE")
+    private String title;
+
+    @Column (name = "IMAGE_BIO")
+    private String bio;
+
+    @Column (name = "IMAGE_LIKES")
     private Long likes;
 
-
+    @Column (name = "IMAGE_CREATED")
+    private Date created;
 
 }
