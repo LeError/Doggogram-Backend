@@ -24,7 +24,6 @@ public class AuthController {
 
     @RequestMapping ( value = "/api/v1/auth/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) {
-        System.err.println(authRequest.getUser() + " " + authRequest.getPass());
         return new ResponseEntity<>(authService.generateJWTToken(authRequest.getUser(), authRequest.getPass()), HttpStatus.OK);
     }
 
