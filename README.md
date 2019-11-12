@@ -21,7 +21,7 @@ Install a IDE if your choice in my case [IntelliJ IDEA](https://www.jetbrains.co
 * Now you have to import the libaries listed below to run the project
 
 ```
-https://github.com/LeError/Tanksoftware
+https://github.com/LeError/Doggogram-Backend
 ```
 
 ## Built With
