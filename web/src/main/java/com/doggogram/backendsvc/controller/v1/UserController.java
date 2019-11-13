@@ -35,7 +35,7 @@ public class UserController {
             userService.registerUser(authRequest.getUser(), authRequest.getPass());
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
