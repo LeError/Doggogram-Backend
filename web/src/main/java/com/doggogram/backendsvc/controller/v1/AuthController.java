@@ -22,7 +22,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @RequestMapping ( value = "/api/v1/auth/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping ( value = {"/api/v1/auth/login", "/api/v1/auth/login/"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) {
         return new ResponseEntity<>(authService.generateJWTToken(authRequest.getUser(), authRequest.getPass()), HttpStatus.OK);
     }
