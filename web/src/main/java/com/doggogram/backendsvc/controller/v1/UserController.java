@@ -2,7 +2,7 @@ package com.doggogram.backendsvc.controller.v1;
 
 import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.dto.UserListDTO;
-import com.doggogram.backendsvc.security.request.AuthRequest;
+import com.doggogram.backendsvc.security.requests.AuthRequest;
 import com.doggogram.backendsvc.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
