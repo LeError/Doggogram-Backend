@@ -1,6 +1,7 @@
 package com.doggogram.backendsvc.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,8 +12,14 @@ import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
 @Entity (name = "USER")
 public class User {
+
+    public User(String user, String pass) {
+        this.user = user;
+        this.pass = pass;
+    }
 
     @Id
     @Column (name = "USER_NAME")
