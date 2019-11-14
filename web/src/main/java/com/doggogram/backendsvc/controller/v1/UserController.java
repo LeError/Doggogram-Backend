@@ -10,9 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping (value = "/api/v1/users")
@@ -29,7 +29,7 @@ public class UserController {
         return new ResponseEntity<>(userService.count(), HttpStatus.OK);
     }
 
-    @RequestMapping ( value = {"/register", "/register/"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping ( value = {"/register", "/register/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) {
         try {
             userService.registerUser(authRequest.getUser(), authRequest.getPass());
