@@ -34,4 +34,12 @@ public class User {
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Image> images;
 
+    public void addImage(Image image) {
+        images.add(image);
+    }
+
+    public void removeImage(Image image) {
+        images.remove(image);
+    }
+
 }
