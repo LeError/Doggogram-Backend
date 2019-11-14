@@ -49,4 +49,16 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>doggogramsvc</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
