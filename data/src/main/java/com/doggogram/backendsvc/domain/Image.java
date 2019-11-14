@@ -18,8 +18,8 @@ public class Image {
     @Column (name = "IMAGE_ID")
     private Long id;
 
-    @Column (name = "IMAGE_URL")
-    private String url;
+    @Column (name = "IMAGE_FILE")
+    private String filename;
 
     @Column (name = "IMAGE_TITLE")
     private String title;
