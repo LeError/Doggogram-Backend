@@ -1,0 +1,11 @@
+[Unit]
+Description=doggogramsvc
+After=syslog.target
+
+[Service]
+User=myapp
+ExecStart=/var/doggogramsvc/doggogramsvc.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
