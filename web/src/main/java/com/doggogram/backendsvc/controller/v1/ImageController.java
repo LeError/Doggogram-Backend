@@ -2,11 +2,13 @@ package com.doggogram.backendsvc.controller.v1;
 
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.StorageService;
+import com.google.common.io.ByteStreams;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +41,7 @@ public class ImageController {
     public ResponseEntity serveFile(@PathVariable String filename) {
         try {
             Resource file = storageService.loadAsResource(filename);
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(Base64Utils.encodeToString(ByteStreams.toByteArray(file.getInputStream())));
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
