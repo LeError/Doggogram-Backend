@@ -1,11 +1,20 @@
 [Unit]
-Description=doggogramsvc
+Description=Doggogram-Service v1.0
 After=syslog.target
+After=network.target
 
 [Service]
-User=myapp
-ExecStart=/var/doggogramsvc/doggogramsvc.jar
+User=root
+Group=root
+Type=simple
+WorkingDirectory=/var/doggogramsvc
+ExecStart=/usr/bin/java -jar /var/doggogramsvc/doggogramsvc.jar
 SuccessExitStatus=143
+Restart=always
+RestartSec=60
+SyslogIdentifier=doggogramsvc
+StartLimitBurst=5
+StartLimitIntervalSec=0
 
 [Install]
 WantedBy=multi-user.target
