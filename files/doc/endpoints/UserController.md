@@ -8,11 +8,9 @@ In this file are all Endpoints of the UserController listed.
 | authentication | both      |
 | method         | both      |
 
-
-
 #### Register Endpoint
 
-Used to register a new user in the backend. This 
+Used to register a new user in the backend.  
 
  ```
 {host}/api/v1/users/register
@@ -35,3 +33,54 @@ In the body should be contained:
 	"pass": "<PASSWORD>"
 }
 ```
+
+#### $count Endpoint
+
+When requested displays the amount of registered users
+
+ ```
+{host}/api/v1/users/$count
+{host}/api/v1/users/$count/
+ ```
+
+| Label            | Parameter |
+| ---------------- | --------- |
+| method           | GET       |
+| authentication   | true      |
+| response success | 200       |
+| response fail    | 400       |
+| response         | int       |
+
+#### All User Endpoint
+
+When requested displays all registered users (DTOs) serialized to JSON
+
+ ```
+{host}/api/v1/users/all
+{host}/api/v1/users/all/
+ ```
+
+| Label            | Parameter |
+| ---------------- | --------- |
+| method           | GET       |
+| authentication   | true      |
+| response success | 200       |
+| response fail    | 400       |
+| response         | JSON      |
+
+#### User Endpoint
+
+When requested displays the data of the requested user serialized to JSON
+
+ ```
+{host}/api/v1/users/user/{user}
+{host}/api/v1/users/user/{user}/
+ ```
+
+| Label            | Parameter |
+| ---------------- | --------- |
+| method           | GET       |
+| authentication   | true      |
+| response success | 200       |
+| response fail    | 400       |
+| response         | JSON      |
