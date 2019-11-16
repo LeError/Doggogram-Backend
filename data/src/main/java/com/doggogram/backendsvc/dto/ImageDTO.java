@@ -8,7 +8,7 @@ import java.util.Date;
 public class ImageDTO {
 
     private Long id;
-    private String url;
+    private String filename;
     private String title;
     private String bio;
     private Long likes;
