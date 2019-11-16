@@ -33,6 +33,11 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+    @GetMapping ({"/$count", "$count/"})
+    public ResponseEntity<Integer> getCount() {
+        return new ResponseEntity<>(imageService.count(), HttpStatus.OK);
+    }
+
     @GetMapping ({"/images/filenames/all", "/images/filenames/all/"})
     public ResponseEntity listUploadedFiles() {
         return new ResponseEntity<>(new ImageFilenameListDTO(imageService.getAllImageFilenames()) , HttpStatus.OK);
@@ -63,7 +68,7 @@ public class ImageController {
     }
 
     @ExceptionHandler (StorageFileNotFoundException.class)
-    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+    public ResponseEntity<?> handleRequestFailed(Exception exc) {
         return ResponseEntity.notFound().build();
     }
 }
