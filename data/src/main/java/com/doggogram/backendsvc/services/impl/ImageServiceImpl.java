@@ -8,6 +8,9 @@ import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.ImageService;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +26,13 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public String addImage (String user, String title, String bio) {
-        System.err.println(user);
+    public String addImage (String user, String title, String bio, String filename) {
         Image image = new Image();
         image.setBio(bio);
         image.setTitle(title);
         image.setCreated(new Date());
         image.setLikes(0L);
+        image.setFilename(filename);
         User userObject = userRepository.findUserByUser(user);
         userObject.addImage(image);
         userRepository.save(userObject);
@@ -44,5 +47,15 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public List<ImageDTO> getAllItems () {
         return null;
+    }
+
+    @Override
+    public String getImageName(String user, String fileExtension) {
+        String filename = user;
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("--dd-MM-yyyy--HH-mm-ss");
+        filename += dateFormat.format(date);
+        filename += "." + fileExtension;
+        return filename;
     }
 }
