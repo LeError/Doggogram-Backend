@@ -8,9 +8,9 @@ In this file are all Endpoints of the AuthController listed.
 | authentication | both      |
 | method         | both      |
 
-#### Register Endpoint
+#### Login Endpoint
 
-Used to register a new user in the Backend.  
+Used to Login into Backend-Service.  
 
  ```URL
 {host}/api/v1/auth/login
