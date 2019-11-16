@@ -3,6 +3,8 @@ package com.doggogram.backendsvc.services.impl;
 import com.doggogram.backendsvc.domain.Image;
 import com.doggogram.backendsvc.domain.User;
 import com.doggogram.backendsvc.dto.ImageDTO;
+import com.doggogram.backendsvc.dto.ImageFilenameDTO;
+import com.doggogram.backendsvc.mapper.ImageMapper;
 import com.doggogram.backendsvc.repositories.ImageRepository;
 import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.ImageService;
@@ -13,15 +15,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl implements ImageService {
 
     private ImageRepository imageRepository;
+    private ImageMapper imageMapper;
     private UserRepository userRepository;
 
-    public ImageServiceImpl(ImageRepository imageRepository, UserRepository userRepository) {
+    public ImageServiceImpl(ImageRepository imageRepository, ImageMapper imageMapper, UserRepository userRepository) {
         this.imageRepository = imageRepository;
+        this.imageMapper = imageMapper;
         this.userRepository = userRepository;
     }
 
@@ -41,12 +46,17 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public int count () {
-        return 0;
+        return imageRepository.findAll().size();
     }
 
     @Override
     public List<ImageDTO> getAllItems () {
-        return null;
+        return imageRepository.findAll().stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ImageFilenameDTO> getAllImageFilenames() {
+        return imageRepository.findAll().stream().map(imageMapper::imageToImageFilenameDTO).collect(Collectors.toList());
     }
 
     @Override
