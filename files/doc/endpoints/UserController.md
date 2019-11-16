@@ -7,8 +7,6 @@ In this file are all Endpoints of the UserController listed.
 | version        | V1        |
 | authentication | both      |
 | method         | both      |
-|                |           |
-|                |           |
 
 
 

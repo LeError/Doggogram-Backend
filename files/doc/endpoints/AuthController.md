@@ -7,7 +7,6 @@ In this file are all Endpoints of the AuthController listed.
 | version        | V1        |
 | authentication | both      |
 | method         | both      |
-|                |           |
 
 #### Register Endpoint
 
