@@ -2,13 +2,16 @@ package com.doggogram.backendsvc.controller.v1;
 
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.StorageService;
+import com.doggogram.backendsvc.storage.exceptions.StorageFileNotFoundException;
 import com.google.common.io.ByteStreams;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Base64Utils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +34,13 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping ("/files/filenames/all")
+    @GetMapping ({"/images/filenames/all", "/images/filenames/all/"})
     public String listUploadedFiles() throws IOException {
+        //todo
         return "uploadForm";
     }
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping({"/images/load/{filename:.+}", "/images/load/{filename:.+}/"})
     @ResponseBody
     public ResponseEntity serveFile(@PathVariable String filename) {
         try {
@@ -48,11 +52,11 @@ public class ImageController {
         }
     }
 
-    @PostMapping({"/file/upload", "/file/upload/"})
+    @PostMapping({"/images/upload", "/images/upload/"})
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("user") String user, @RequestParam("bio") String bio, @RequestParam("title") String title) {
         try {
-            imageService.addImage(user, title, bio);
-            storageService.store(file);
+            imageService.addImage(user, title, bio, imageService.getImageName(user, FilenameUtils.getExtension(file.getOriginalFilename())));
+            storageService.store(file, imageService.getImageName(user, FilenameUtils.getExtension(file.getOriginalFilename())));
             return new ResponseEntity<>("File Upload Accepted!", HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,12 +64,8 @@ public class ImageController {
         }
     }
 
-    /*
-    @ExceptionHandler(StorageFileNotFoundException.class)
+    @ExceptionHandler (StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
         return ResponseEntity.notFound().build();
     }
-
-
-     */
 }
