@@ -33,7 +33,7 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping ({"/$count", "$count/"})
+    @GetMapping ({"/images/$count", "/images/$count/"})
     public ResponseEntity<Integer> getCount() {
         return new ResponseEntity<>(imageService.count(), HttpStatus.OK);
     }
@@ -63,7 +63,7 @@ public class ImageController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(Base64Utils.encodeToString(ByteStreams.toByteArray(file.getInputStream())));
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
