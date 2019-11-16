@@ -1,5 +1,6 @@
 package com.doggogram.backendsvc.controller.v1;
 
+import com.doggogram.backendsvc.dto.ImageFilenameListDTO;
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.StorageService;
 import com.doggogram.backendsvc.storage.exceptions.StorageFileNotFoundException;
@@ -20,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @Controller
 @RequestMapping("/api/v1/storage")
 public class ImageController {
@@ -35,21 +34,8 @@ public class ImageController {
     }
 
     @GetMapping ({"/images/filenames/all", "/images/filenames/all/"})
-    public String listUploadedFiles() throws IOException {
-        //todo
-        return "uploadForm";
-    }
-
-    @GetMapping({"/images/load/{filename:.+}", "/images/load/{filename:.+}/"})
-    @ResponseBody
-    public ResponseEntity serveFile(@PathVariable String filename) {
-        try {
-            Resource file = storageService.loadAsResource(filename);
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(Base64Utils.encodeToString(ByteStreams.toByteArray(file.getInputStream())));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity listUploadedFiles() {
+        return new ResponseEntity<>(new ImageFilenameListDTO(imageService.getAllImageFilenames()) , HttpStatus.OK);
     }
 
     @PostMapping({"/images/upload", "/images/upload/"})
@@ -61,6 +47,18 @@ public class ImageController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("", HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping({"/images/load/{filename:.+}", "/images/load/{filename:.+}/"})
+    @ResponseBody
+    public ResponseEntity serveFile(@PathVariable String filename) {
+        try {
+            Resource file = storageService.loadAsResource(filename);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(Base64Utils.encodeToString(ByteStreams.toByteArray(file.getInputStream())));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
