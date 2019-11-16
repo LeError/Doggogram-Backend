@@ -26,7 +26,11 @@ https://github.com/LeError/Doggogram-Backend
 
 ## Built With
 
-* [tbd](http://www.jfoenix.com/) - tbd
+* [Spring Boot](https://spring.io/projects/spring-boot)
+* [Apache commons IO](https://commons.apache.org/proper/commons-io/)
+* [Google Guava](https://github.com/google/guava)
+* [JJWT](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt)
+* [MariaDB Java Client](https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client)
 
 ## Authors
 
