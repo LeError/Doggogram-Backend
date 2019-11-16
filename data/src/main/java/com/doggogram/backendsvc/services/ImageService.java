@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ImageService extends RestService<List<ImageDTO>> {
 
-    String addImage(String user, String title, String bio);
+    String addImage(String user, String title, String bio, String filename);
+    String getImageName(String user, String fileExtension);
 
 }
