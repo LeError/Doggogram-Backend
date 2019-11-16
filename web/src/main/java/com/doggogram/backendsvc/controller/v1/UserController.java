@@ -4,10 +4,12 @@ import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.dto.UserListDTO;
 import com.doggogram.backendsvc.security.requests.AuthRequest;
 import com.doggogram.backendsvc.services.UserService;
+import com.doggogram.backendsvc.storage.exceptions.StorageFileNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,11 +26,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping ("/$count")
-    public ResponseEntity<Integer> getCount() {
-        return new ResponseEntity<>(userService.count(), HttpStatus.OK);
-    }
-
     @PostMapping ( value = {"/register", "/register/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) {
         try {
@@ -39,14 +36,24 @@ public class UserController {
         }
     }
 
-    @GetMapping ({"/user/{user}", "/user/{user}/"})
-    public ResponseEntity<UserDTO> getUser(@PathVariable String user) {
-        return new ResponseEntity<>(userService.findUserByUser(user), HttpStatus.OK);
+    @GetMapping ({"/$count", "/$count/"})
+    public ResponseEntity<Integer> getCount() {
+        return new ResponseEntity<>(userService.count(), HttpStatus.OK);
     }
 
     @GetMapping ({"/all", "/all/"})
     public ResponseEntity<UserListDTO> getUsers() {
         return new ResponseEntity<>(new UserListDTO(userService.getAllItems()), HttpStatus.OK);
+    }
+
+    @GetMapping ({"/user/{user}", "/user/{user}/"})
+    public ResponseEntity<UserDTO> getUser(@PathVariable String user) {
+        return new ResponseEntity<>(userService.findUserByUser(user), HttpStatus.OK);
+    }
+
+    @ExceptionHandler (StorageFileNotFoundException.class)
+    public ResponseEntity<?> handleRequestFailed(Exception exc) {
+        return ResponseEntity.badRequest().build();
     }
 
 }
