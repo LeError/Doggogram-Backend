@@ -13,8 +13,8 @@ In this file are all Endpoints of the ImageController listed.
 When requested displays the amount of images stored by the Backend
 
  ```
-{host}/api/v1/images/storage/$count
-{host}/api/v1/images/storage/$count/
+{host}/api/v1/storage/images/$count
+{host}/api/v1/storage/images/$count/
  ```
 
 | Label            | Parameter |
@@ -30,8 +30,8 @@ When requested displays the amount of images stored by the Backend
 When requested displays all filenames of all images stored serialized to JSON
 
  ```
-{host}/api/v1/images/filenames/all
-{host}/api/v1/images/filenames/all/
+{host}/api/v1/storage/images/filenames/all
+{host}/api/v1/storage/images/filenames/all/
  ```
 
 | Label            | Parameter |
@@ -47,8 +47,8 @@ When requested displays all filenames of all images stored serialized to JSON
 When a POST-Request with a multipart image is received it is stored by the backend
 
  ```
-{host}/api/v1/images/upload
-{host}/api/v1/images/upload/
+{host}/api/v1/storage/images/upload
+{host}/api/v1/storage/images/upload/
  ```
 
 | Label            | Parameter |
@@ -64,8 +64,8 @@ When a POST-Request with a multipart image is received it is stored by the backe
 When requested displays the base64 encoded image of the requested image
 
  ```
-{host}/api/v1/images/load/{filename:.+}
-{host}/api/v1/images/load/{filename:.+}
+{host}/api/v1/storage/images/load/{filename:.+}
+{host}/api/v1/storage/images/load/{filename:.+}
  ```
 
 | Label            | Parameter |
