@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.stream.Stream;
 
 @Service
 public class StorageServiceImpl implements StorageService {
@@ -58,7 +57,7 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-    @Override
+    /*
     public Stream<Path> loadAll () {
         try {
             return Files.walk(this.rootLocation, 1).filter(path -> !path.equals(this.rootLocation)).map(this.rootLocation::relativize);
@@ -66,7 +65,7 @@ public class StorageServiceImpl implements StorageService {
         catch (IOException e) {
             throw new StorageException("Failed to read stored files", e);
         }
-    }
+    }*/
 
     @Override
     public Path load (String filename) {
