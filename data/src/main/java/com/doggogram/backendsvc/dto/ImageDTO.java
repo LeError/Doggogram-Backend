@@ -13,5 +13,6 @@ public class ImageDTO {
     private String bio;
     private Long likes;
     private Date created;
+    private String imageEncoded;
 
 }
