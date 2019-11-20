@@ -42,11 +42,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>28.1-jre</version>
-        </dependency>
-        <dependency>
             <groupId>com.doggogram</groupId>
             <artifactId>data</artifactId>
             <version>0.0.1</version>
