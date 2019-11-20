@@ -4,9 +4,11 @@ import com.doggogram.backendsvc.services.StorageService;
 import com.doggogram.backendsvc.storage.exceptions.StorageException;
 import com.doggogram.backendsvc.storage.exceptions.StorageFileNotFoundException;
 import com.doggogram.backendsvc.storage.properties.StorageProperties;
+import com.google.common.io.ByteStreams;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,6 +88,11 @@ public class StorageServiceImpl implements StorageService {
         catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);
         }
+    }
+
+    @Override
+    public String getEncodedImage (String filename) throws IOException {
+        return Base64Utils.encodeToString(ByteStreams.toByteArray(loadAsResource(filename).getInputStream()));
     }
 
     @Override
