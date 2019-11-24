@@ -11,6 +11,7 @@ import java.util.List;
 @XmlRootElement (name = "error")
 public class ErrorResponse {
 
+    private String exception;
     private String message;
     private List<String> details;
 
