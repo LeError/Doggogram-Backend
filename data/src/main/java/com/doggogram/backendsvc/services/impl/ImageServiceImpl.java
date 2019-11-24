@@ -9,11 +9,12 @@ import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.StorageService;
 import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
+import com.doggogram.backendsvc.util.exceptions.ImageCorruptedException;
+import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,11 +62,10 @@ public class ImageServiceImpl implements ImageService {
         for(ImageDTO image : images) {
             try {
                 image.setImageEncoded(storageService.getEncodedImage(image.getFilename()));
-            } catch (IOException e) {
-                log.error("Could not load image for " + image.getId() + ", so it will be removed!");
-                imageRepository.deleteImageById(image.getId());
-                log.info("Removed Image " + image.getId() + " from Database!");
-                corruptedImages.add(image);
+            } catch (ImageCorruptedException e) {
+                corruptedImages.add(handleCorruptedImage(image));
+            } catch (ImageNotFoundException e) {
+                corruptedImages.add(handleCorruptedImage(image));
             }
         }
         images.removeAll(corruptedImages);
@@ -73,18 +73,30 @@ public class ImageServiceImpl implements ImageService {
         return images;
     }
 
+    private ImageDTO handleCorruptedImage (ImageDTO image) {
+        log.error("Could not load image for " + image.getId() + ", so it will be removed!");
+        Image imageCopy = new Image(image);
+        User user = userRepository.findUserByUser(userRepository.findUserByImageId(imageCopy.getId()));
+        user.getImages().remove(imageCopy);
+        imageRepository.deleteImageById(image.getId());
+        log.info("Removed Image " + image.getId() + " from Database!");
+        return image;
+    }
+
     @Override
     public ImageDTO getItemById (long id) throws EntityNotFoundException, EntityCorruptedException {
-        ImageDTO imageDTO = imageMapper.imageToImageDTO(imageRepository.findById(id));
-        if(imageDTO == null) {
-            throw new EntityNotFoundException();
+        Image image = imageRepository.findById(id);
+        if(image == null) {
+            throw new EntityNotFoundException("Can't find requested Entity in Database!");
         }
+        ImageDTO imageDTO = imageMapper.imageToImageDTO(imageRepository.findById(id));
         try {
             imageDTO.setImageEncoded(storageService.getEncodedImage(imageDTO.getFilename()));
-        } catch (IOException e) {
-            log.error("Could not load image for " + imageDTO.getId() + ", so it will be removed!");
-            imageRepository.deleteImageById(imageDTO.getId());
-            log.info("Removed Image " + imageDTO.getId() + " from Database!");
+        } catch (ImageNotFoundException e) {
+            handleCorruptedImage(imageDTO);
+            throw new EntityCorruptedException("Can't return corrupted entity!");
+        } catch (ImageCorruptedException e) {
+            handleCorruptedImage(imageDTO);
             throw new EntityCorruptedException("Can't return corrupted entity!");
         }
         return imageDTO;
