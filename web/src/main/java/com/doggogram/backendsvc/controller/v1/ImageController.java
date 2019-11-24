@@ -1,5 +1,6 @@
 package com.doggogram.backendsvc.controller.v1;
 
+import com.doggogram.backendsvc.dto.ImageDTO;
 import com.doggogram.backendsvc.dto.ImageListDTO;
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.StorageService;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.EntityNotFoundException;
 
 @Slf4j
 @Controller
@@ -70,13 +73,8 @@ public class ImageController {
     }
 
     @GetMapping({"/images/image/{imageId}", "/images/image/{imageId}/"})
-    public ResponseEntity getImage(@PathVariable long imageId) {
-        try {
-            return new ResponseEntity(imageService.getItemById(imageId), HttpStatus.OK);
-        } catch (EntityCorruptedException e) {
-            log.error(e.getMessage());
-            return new ResponseEntity(e.getMessage(), HttpStatus.GONE);
-        }
+    public ResponseEntity<ImageDTO> getImage(@PathVariable long imageId) throws EntityNotFoundException, EntityCorruptedException {
+        return new ResponseEntity(imageService.getItemById(imageId), HttpStatus.OK);
     }
 
 }
