@@ -2,8 +2,9 @@ package com.doggogram.backendsvc.services.impl;
 
 import com.doggogram.backendsvc.services.StorageService;
 import com.doggogram.backendsvc.storage.exceptions.StorageException;
-import com.doggogram.backendsvc.storage.exceptions.StorageFileNotFoundException;
 import com.doggogram.backendsvc.storage.properties.StorageProperties;
+import com.doggogram.backendsvc.util.exceptions.ImageCorruptedException;
+import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
 import com.google.common.io.ByteStreams;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -68,12 +69,16 @@ public class StorageServiceImpl implements StorageService {
     }*/
 
     @Override
-    public Path load (String filename) {
-        return rootLocation.resolve(filename);
+    public Path load (String filename) throws ImageNotFoundException {
+        try {
+            return rootLocation.resolve(filename);
+        } catch (NullPointerException e) {
+            throw new ImageNotFoundException("Could not find image + " + filename + "!");
+        }
     }
 
     @Override
-    public Resource loadAsResource (String filename) {
+    public Resource loadAsResource (String filename) throws ImageNotFoundException {
         try {
             Path file = load(filename);
             Resource resource = new UrlResource(file.toUri());
@@ -81,17 +86,21 @@ public class StorageServiceImpl implements StorageService {
                 return resource;
             }
             else {
-                throw new StorageFileNotFoundException("Could not read file: " + filename);
+                throw new ImageNotFoundException("Could not read file: " + filename);
             }
         }
         catch (MalformedURLException e) {
-            throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+            throw new ImageNotFoundException("Could not read file: " + filename);
         }
     }
 
     @Override
-    public String getEncodedImage (String filename) throws IOException {
-        return Base64Utils.encodeToString(ByteStreams.toByteArray(loadAsResource(filename).getInputStream()));
+    public String getEncodedImage (String filename) throws ImageNotFoundException, ImageCorruptedException {
+        try {
+            return Base64Utils.encodeToString(ByteStreams.toByteArray(loadAsResource(filename).getInputStream()));
+        } catch(IOException e) {
+            throw new ImageCorruptedException("Could not load Image " + filename + "! Probably corrupted or gone!");
+        }
     }
 
     @Override
