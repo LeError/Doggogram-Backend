@@ -4,12 +4,10 @@ import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.dto.UserListDTO;
 import com.doggogram.backendsvc.security.requests.AuthRequest;
 import com.doggogram.backendsvc.services.UserService;
-import com.doggogram.backendsvc.storage.exceptions.StorageFileNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,11 +47,6 @@ public class UserController {
     @GetMapping ({"/user/{user}", "/user/{user}/"})
     public ResponseEntity<UserDTO> getUser(@PathVariable String user) {
         return new ResponseEntity<>(userService.findUserByUser(user), HttpStatus.OK);
-    }
-
-    @ExceptionHandler (StorageFileNotFoundException.class)
-    public ResponseEntity<?> handleRequestFailed(Exception exc) {
-        return ResponseEntity.badRequest().build();
     }
 
 }

@@ -3,7 +3,6 @@ package com.doggogram.backendsvc.controller.v1;
 import com.doggogram.backendsvc.dto.ImageListDTO;
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.StorageService;
-import com.doggogram.backendsvc.storage.exceptions.StorageFileNotFoundException;
 import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
 import com.google.common.io.ByteStreams;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Base64Utils;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
-@RequestMapping("/api/v1/storage")
+@RequestMapping("/api/v1/")
 public class ImageController {
 
     private final StorageService storageService;
@@ -81,8 +79,4 @@ public class ImageController {
         }
     }
 
-    @ExceptionHandler (StorageFileNotFoundException.class)
-    public ResponseEntity<?> handleRequestFailed(Exception exc) {
-        return ResponseEntity.notFound().build();
-    }
 }
