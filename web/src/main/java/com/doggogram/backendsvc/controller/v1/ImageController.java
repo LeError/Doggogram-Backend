@@ -6,6 +6,7 @@ import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.StorageService;
 import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
+import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
 import com.google.common.io.ByteStreams;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -62,13 +63,12 @@ public class ImageController {
 
     @GetMapping({"/images/file/{filename:.+}", "/images/file/{filename:.+}/"})
     @ResponseBody
-    public ResponseEntity serveFile(@PathVariable String filename) {
+    public ResponseEntity serveFile(@PathVariable String filename) throws ImageNotFoundException {
         try {
             Resource file = storageService.loadAsResource(filename);
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(Base64Utils.encodeToString(ByteStreams.toByteArray(file.getInputStream())));
         } catch (Exception e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            throw new ImageNotFoundException("Could not find Image with Filename " + filename + "!");
         }
     }
 
