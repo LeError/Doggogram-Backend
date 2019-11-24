@@ -4,6 +4,7 @@ import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.dto.UserListDTO;
 import com.doggogram.backendsvc.security.requests.AuthRequest;
 import com.doggogram.backendsvc.services.UserService;
+import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,12 @@ public class UserController {
     }
 
     @PostMapping ( value = {"/register", "/register/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) throws UserRegistrationException {
         try {
             userService.registerUser(authRequest.getUser(), authRequest.getPass());
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+            throw new UserRegistrationException("Could not register User! Contact Administrator if Problem persists!");
         }
     }
 
