@@ -23,7 +23,6 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e, WebRequest webRequest) {
         List<String> details = new ArrayList<>();
-        System.err.println(e.getMessage());
         details.add(e.getMessage());
         return new ResponseEntity<>(new ErrorResponse(NOT_FOUND, details), HttpStatus.NOT_FOUND);
     }
@@ -31,12 +30,10 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityCorruptedException.class)
     public final ResponseEntity<ErrorResponse> handleEntityCorruptedException(EntityCorruptedException e, WebRequest webRequest) {
         List<String> details = new ArrayList<>();
-        System.err.println(e.getMessage());
         details.add(e.getMessage());
         return new ResponseEntity<>(new ErrorResponse(GONE, details), HttpStatus.GONE);
     }
 
-/*
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ErrorResponse> handleUnhandledExceptions(Exception e, WebRequest webRequest) {
         List<String> details = new ArrayList<>();
@@ -44,5 +41,5 @@ public class ErrorController extends ResponseEntityExceptionHandler {
         details.add(e.getMessage());
         return new ResponseEntity<>(new ErrorResponse(SERVER_ERROR, details), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-*/
+
 }
