@@ -1,6 +1,7 @@
 package com.doggogram.backendsvc.controller.v1;
 
 import com.doggogram.backendsvc.util.ErrorResponse;
+import com.doggogram.backendsvc.util.exceptions.AuthException;
 import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
 import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
@@ -22,6 +23,7 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     private final String NOT_FOUND = "Requested Resource not Found!";
     private final String GONE = "Requested Resource was corrupted!";
     private final String BAD_REQUEST ="Bad  Request!";
+    private final String UNAUTHORIZED ="Unauthorized!";
 
     @ExceptionHandler(EntityNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e, WebRequest webRequest) {
@@ -48,11 +50,19 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(UserRegistrationException.class)
-    public final ResponseEntity<ErrorResponse> handleUserRegistrationException(ImageNotFoundException e, WebRequest webRequest) {
+    public final ResponseEntity<ErrorResponse> handleUserRegistrationException(UserRegistrationException e, WebRequest webRequest) {
         List<String> details = new ArrayList<>();
         details.add(e.getMessage());
         details.add(webRequest.getDescription(false));
-        return new ResponseEntity<>(new ErrorResponse("ImageNotFoundException", BAD_REQUEST, details), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse("UserRegistrationException", BAD_REQUEST, details), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthException.class)
+    public final ResponseEntity<ErrorResponse> handleAuthException(AuthException e, WebRequest webRequest) {
+        List<String> details = new ArrayList<>();
+        details.add(e.getMessage());
+        details.add(webRequest.getDescription(false));
+        return new ResponseEntity<>(new ErrorResponse("AuthException", UNAUTHORIZED, details), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Exception.class)
