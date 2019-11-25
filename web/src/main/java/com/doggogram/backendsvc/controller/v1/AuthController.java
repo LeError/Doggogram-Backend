@@ -2,6 +2,7 @@ package com.doggogram.backendsvc.controller.v1;
 
 import com.doggogram.backendsvc.security.requests.AuthRequest;
 import com.doggogram.backendsvc.services.AuthService;
+import com.doggogram.backendsvc.util.exceptions.AuthException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,12 @@ public class AuthController {
     }
 
     @RequestMapping ( value = {"/api/v1/auth/login", "/api/v1/auth/login/"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) {
-        return new ResponseEntity<>(authService.generateJWTToken(authRequest.getUser(), authRequest.getPass()), HttpStatus.OK);
+    public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) throws AuthException {
+        try {
+            return new ResponseEntity<>(authService.generateJWTToken(authRequest.getUser(), authRequest.getPass()), HttpStatus.OK);
+        } catch(Exception e) {
+            throw new AuthException("Could not Authenticate!");
+        }
     }
 
 }
