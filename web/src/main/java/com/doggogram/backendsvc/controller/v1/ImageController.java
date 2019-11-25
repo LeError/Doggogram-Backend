@@ -5,6 +5,7 @@ import com.doggogram.backendsvc.dto.ImageListDTO;
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.StorageService;
 import com.doggogram.backendsvc.util.Util;
+import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
 import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
 import com.google.common.io.ByteStreams;
@@ -40,8 +41,12 @@ public class ImageController {
     }
 
     @GetMapping ({"/images/$count", "/images/$count/"})
-    public ResponseEntity<Integer> getCount() {
-        return new ResponseEntity<>(imageService.count(), HttpStatus.OK);
+    public ResponseEntity<Integer> getCount() throws ControllerCountException {
+        try {
+            return new ResponseEntity<>(imageService.count(), HttpStatus.OK);
+        } catch(Exception e) {
+            throw new ControllerCountException("Could not count Entities! Maybe the amount of Entities is to large or Service is unavailable!");
+        }
     }
 
     @PostMapping({"/images/upload", "/images/upload/"})

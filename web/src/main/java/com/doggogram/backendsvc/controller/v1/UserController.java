@@ -4,6 +4,7 @@ import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.dto.UserListDTO;
 import com.doggogram.backendsvc.security.requests.AuthRequest;
 import com.doggogram.backendsvc.services.UserService;
+import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,8 +37,12 @@ public class UserController {
     }
 
     @GetMapping ({"/$count", "/$count/"})
-    public ResponseEntity<Integer> getCount() {
-        return new ResponseEntity<>(userService.count(), HttpStatus.OK);
+    public ResponseEntity<Integer> getCount() throws ControllerCountException {
+        try {
+            return new ResponseEntity<>(userService.count(), HttpStatus.OK);
+        } catch(Exception e) {
+            throw new ControllerCountException("Could not count Entities! Maybe the amount of Entities is to large or Service is unavailable!");
+        }
     }
 
     @GetMapping ({"/all", "/all/"})
