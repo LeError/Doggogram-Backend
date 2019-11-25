@@ -8,6 +8,7 @@ import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
 import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
+import com.doggogram.backendsvc.util.exceptions.ImageUploadException;
 import com.google.common.io.ByteStreams;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -50,14 +51,20 @@ public class ImageController {
     }
 
     @PostMapping({"/images/upload", "/images/upload/"})
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("user") String user, @RequestParam("bio") String bio, @RequestParam("title") String title) {
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("user") String user, @RequestParam("bio") String bio, @RequestParam("title") String title) throws ImageUploadException {
         try {
+            switch(FilenameUtils.getExtension(file.getOriginalFilename())) {
+                case "jpg":
+                case "jpeg":
+                case "png":
+                case "gif": break;
+                default: throw new ImageUploadException("Not a allowed file extension! Only jpg, jpeg, png and gif are allowed!");
+            }
             imageService.addImage(user, title, bio, Util.getImageName(user, FilenameUtils.getExtension(file.getOriginalFilename())));
             storageService.store(file, Util.getImageName(user, FilenameUtils.getExtension(file.getOriginalFilename())));
             return new ResponseEntity<>("File Upload Accepted!", HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("", HttpStatus.CONFLICT);
+            throw new ImageUploadException(e.getMessage());
         }
     }
 
