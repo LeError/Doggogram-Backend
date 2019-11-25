@@ -5,6 +5,7 @@ import com.doggogram.backendsvc.util.exceptions.AuthException;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
 import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
+import com.doggogram.backendsvc.util.exceptions.ImageUploadException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,12 +67,21 @@ public class ErrorController extends ResponseEntityExceptionHandler {
         details.add(webRequest.getDescription(false));
         return new ResponseEntity<>(new ErrorResponse("AuthException", UNAUTHORIZED, details), HttpStatus.UNAUTHORIZED);
     }
+
     @ExceptionHandler(ControllerCountException.class)
     public final ResponseEntity<ErrorResponse> handleControllerCountException(ControllerCountException e, WebRequest webRequest) {
         List<String> details = new ArrayList<>();
         details.add(e.getMessage());
         details.add(webRequest.getDescription(false));
         return new ResponseEntity<>(new ErrorResponse("ControllerCountException", SERVICE_UNAVAILABLE, details), HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler(ImageUploadException.class)
+    public final ResponseEntity<ErrorResponse> handleImageUploadException(ImageUploadException e, WebRequest webRequest) {
+        List<String> details = new ArrayList<>();
+        details.add(e.getMessage());
+        details.add(webRequest.getDescription(false));
+        return new ResponseEntity<>(new ErrorResponse("ImageUploadException", SERVICE_UNAVAILABLE, details), HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(Exception.class)
