@@ -1,4 +1,4 @@
-package com.doggogram.backendsvc.storage.exceptions;
+package com.doggogram.backendsvc.util.exceptions;
 
 import org.springframework.security.core.AuthenticationException;
 
