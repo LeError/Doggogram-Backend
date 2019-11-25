@@ -58,7 +58,6 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ErrorResponse> handleUnhandledExceptions(Exception e, WebRequest webRequest) {
         List<String> details = new ArrayList<>();
-        System.err.println(e.getMessage());
         details.add(e.getMessage());
         details.add(webRequest.getDescription(false));
         details.add("A unhandled Exception was thrown! Please Report to the Administrator / Support!");
