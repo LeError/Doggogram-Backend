@@ -1,4 +1,4 @@
-package com.doggogram.backendsvc.storage.properties;
+package com.doggogram.backendsvc.util.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

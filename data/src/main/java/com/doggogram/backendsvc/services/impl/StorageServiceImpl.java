@@ -1,10 +1,10 @@
 package com.doggogram.backendsvc.services.impl;
 
 import com.doggogram.backendsvc.services.StorageService;
-import com.doggogram.backendsvc.storage.properties.StorageProperties;
 import com.doggogram.backendsvc.util.exceptions.ImageCorruptedException;
 import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
 import com.doggogram.backendsvc.util.exceptions.StorageException;
+import com.doggogram.backendsvc.util.properties.StorageProperties;
 import com.google.common.io.ByteStreams;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
