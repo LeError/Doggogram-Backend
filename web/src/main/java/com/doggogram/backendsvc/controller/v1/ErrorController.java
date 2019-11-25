@@ -21,7 +21,7 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     private final String SERVER_ERROR = "Internal Server Error!";
     private final String NOT_FOUND = "Requested Resource not Found!";
     private final String GONE = "Requested Resource was corrupted!";
-    private final String NOT_ACCEPTABLE ="Registration not Possible!";
+    private final String BAD_REQUEST ="Bad  Request!";
 
     @ExceptionHandler(EntityNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e, WebRequest webRequest) {
@@ -52,7 +52,7 @@ public class ErrorController extends ResponseEntityExceptionHandler {
         List<String> details = new ArrayList<>();
         details.add(e.getMessage());
         details.add(webRequest.getDescription(false));
-        return new ResponseEntity<>(new ErrorResponse("ImageNotFoundException", NOT_ACCEPTABLE, details), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(new ErrorResponse("ImageNotFoundException", BAD_REQUEST, details), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
