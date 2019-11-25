@@ -2,6 +2,7 @@ package com.doggogram.backendsvc.controller.v1;
 
 import com.doggogram.backendsvc.util.ErrorResponse;
 import com.doggogram.backendsvc.util.exceptions.AuthException;
+import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
 import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
@@ -24,6 +25,7 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     private final String GONE = "Requested Resource was corrupted!";
     private final String BAD_REQUEST ="Bad  Request!";
     private final String UNAUTHORIZED ="Unauthorized!";
+    private final String SERVICE_UNAVAILABLE ="Service not available!";
 
     @ExceptionHandler(EntityNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e, WebRequest webRequest) {
@@ -63,6 +65,13 @@ public class ErrorController extends ResponseEntityExceptionHandler {
         details.add(e.getMessage());
         details.add(webRequest.getDescription(false));
         return new ResponseEntity<>(new ErrorResponse("AuthException", UNAUTHORIZED, details), HttpStatus.UNAUTHORIZED);
+    }
+    @ExceptionHandler(ControllerCountException.class)
+    public final ResponseEntity<ErrorResponse> handleControllerCountException(ControllerCountException e, WebRequest webRequest) {
+        List<String> details = new ArrayList<>();
+        details.add(e.getMessage());
+        details.add(webRequest.getDescription(false));
+        return new ResponseEntity<>(new ErrorResponse("ControllerCountException", SERVICE_UNAVAILABLE, details), HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(Exception.class)
