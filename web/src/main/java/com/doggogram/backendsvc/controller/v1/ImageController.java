@@ -3,6 +3,7 @@ package com.doggogram.backendsvc.controller.v1;
 import com.doggogram.backendsvc.dto.ImageDTO;
 import com.doggogram.backendsvc.dto.ImageListDTO;
 import com.doggogram.backendsvc.services.ImageService;
+import com.doggogram.backendsvc.services.JwtTokenService;
 import com.doggogram.backendsvc.services.StorageService;
 import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
@@ -21,6 +22,7 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,10 +37,12 @@ public class ImageController {
 
     private final StorageService storageService;
     private final ImageService imageService;
+    private final JwtTokenService jwtTokenService;
 
-    public ImageController (StorageService storageService, ImageService imageService) {
+    public ImageController (StorageService storageService, ImageService imageService, JwtTokenService jwtTokenService) {
         this.storageService = storageService;
         this.imageService = imageService;
+        this.jwtTokenService = jwtTokenService;
     }
 
     @GetMapping ({"/images/$count", "/images/$count/"})
@@ -51,8 +55,9 @@ public class ImageController {
     }
 
     @PostMapping({"/images/upload", "/images/upload/"})
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("user") String user, @RequestParam("bio") String bio, @RequestParam("title") String title) throws ImageUploadException {
+    public ResponseEntity<String> handleFileUpload(@RequestHeader(value = "Authorization") String auth, @RequestParam("file") MultipartFile file, @RequestParam("bio") String bio, @RequestParam("title") String title) throws ImageUploadException {
         try {
+            String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
             switch(FilenameUtils.getExtension(file.getOriginalFilename())) {
                 case "jpg":
                 case "jpeg":
