@@ -3,7 +3,9 @@ package com.doggogram.backendsvc.services.impl;
 import com.doggogram.backendsvc.domain.Image;
 import com.doggogram.backendsvc.domain.User;
 import com.doggogram.backendsvc.dto.ImageDTO;
+import com.doggogram.backendsvc.dto.UserImagesDTO;
 import com.doggogram.backendsvc.mapper.ImageMapper;
+import com.doggogram.backendsvc.mapper.UserMapper;
 import com.doggogram.backendsvc.repositories.ImageRepository;
 import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.ImageService;
@@ -24,11 +26,13 @@ public class ImageServiceImpl implements ImageService {
     private ImageRepository imageRepository;
     private ImageMapper imageMapper;
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
-    public ImageServiceImpl(ImageRepository imageRepository, ImageMapper imageMapper, UserRepository userRepository) {
+    public ImageServiceImpl(ImageRepository imageRepository, ImageMapper imageMapper, UserRepository userRepository, UserMapper userMapper) {
         this.imageRepository = imageRepository;
         this.imageMapper = imageMapper;
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -59,7 +63,16 @@ public class ImageServiceImpl implements ImageService {
         if(image == null) {
             throw new EntityNotFoundException("Can't find requested Entity in Database!");
         }
-        return imageMapper.imageToImageDTO(imageRepository.findById(id));
+        return imageMapper.imageToImageDTO(image);
+    }
+
+    @Override
+    public UserImagesDTO getUserImagesByUser (String user) throws EntityNotFoundException {
+        User userEntity = userRepository.findUserByUser(user);
+        if(userEntity == null) {
+            throw new EntityNotFoundException("Can't find requested user Entity in Database!");
+        }
+        return userMapper.userToUserImagesDTO(userEntity);
     }
 
 }
