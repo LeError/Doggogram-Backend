@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -40,7 +39,9 @@ public class User {
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Image> images;
 
-    @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<User> following;
+
     public void addImage(Image image) {
         images.add(image);
     }
