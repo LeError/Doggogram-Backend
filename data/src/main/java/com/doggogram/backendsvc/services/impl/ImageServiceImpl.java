@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,7 +70,6 @@ public class ImageServiceImpl implements ImageService {
         }
         List<Long> imageIds = imageRepository.findImageIdByUser(user);
         UserImagesDTO imagesDTO = new UserImagesDTO();
-        imagesDTO.setImages(new ArrayList<>());
         for(int i = 0; i < 9; i++) {
             int selected = imageIds.size() - 9 * idx - i;
             if(selected > - 1) {
@@ -80,6 +78,15 @@ public class ImageServiceImpl implements ImageService {
                 break;
             }
 
+        }
+        return imagesDTO;
+    }
+
+    @Override
+    public UserImagesDTO getFeedImagesByLastId (long lastId) {
+        UserImagesDTO imagesDTO = new UserImagesDTO();
+        for(Long imageId : imageRepository.findImageIdByLastId(lastId)) {
+            imagesDTO.getImages().add(imageRepository.findById(imageId.longValue()));
         }
         return imagesDTO;
     }
