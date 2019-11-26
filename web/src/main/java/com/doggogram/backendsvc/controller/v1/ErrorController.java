@@ -3,8 +3,6 @@ package com.doggogram.backendsvc.controller.v1;
 import com.doggogram.backendsvc.util.ErrorResponse;
 import com.doggogram.backendsvc.util.exceptions.AuthException;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
-import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
-import com.doggogram.backendsvc.util.exceptions.ImageNotFoundException;
 import com.doggogram.backendsvc.util.exceptions.ImageUploadException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
 import org.springframework.http.HttpStatus;
@@ -34,22 +32,6 @@ public class ErrorController extends ResponseEntityExceptionHandler {
         details.add(e.getMessage());
         details.add(webRequest.getDescription(false));
         return new ResponseEntity<>(new ErrorResponse("EntityNotFoundException", NOT_FOUND, details), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(EntityCorruptedException.class)
-    public final ResponseEntity<ErrorResponse> handleEntityCorruptedException(EntityCorruptedException e, WebRequest webRequest) {
-        List<String> details = new ArrayList<>();
-        details.add(e.getMessage());
-        details.add(webRequest.getDescription(false));
-        return new ResponseEntity<>(new ErrorResponse("EntityCorruptedException", GONE, details), HttpStatus.GONE);
-    }
-
-    @ExceptionHandler(ImageNotFoundException.class)
-    public final ResponseEntity<ErrorResponse> handleImageNotFoundException(ImageNotFoundException e, WebRequest webRequest) {
-        List<String> details = new ArrayList<>();
-        details.add(e.getMessage());
-        details.add(webRequest.getDescription(false));
-        return new ResponseEntity<>(new ErrorResponse("ImageNotFoundException", NOT_FOUND, details), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserRegistrationException.class)
