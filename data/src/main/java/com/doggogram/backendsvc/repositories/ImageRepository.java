@@ -14,13 +14,16 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     void deleteImageById(Long id);
 
-    @Query (value = "SELECT images_IMAGE_ID FROM USER_IMAGE WHERE images_IMAGE_ID < ?1 ORDER BY images_IMAGE_ID DESC LIMIT 9", nativeQuery = true)
+    @Query (value = "SELECT IMAGE_ID FROM IMAGE WHERE IMAGE_ID < ?1 ORDER BY IMAGE_ID DESC LIMIT 9", nativeQuery = true)
     List<Long> findImageIdByLastId(Long lastId);
 
-    @Query (value = "SELECT images_IMAGE_ID FROM USER_IMAGE WHERE USER_USER_NAME = ?1 AND images_IMAGE_ID < ?2 ORDER BY images_IMAGE_ID DESC LIMIT 9", nativeQuery = true)
+    @Query (value = "SELECT IMAGE_ID FROM IMAGE WHERE FK_USER = ?1 AND IMAGE_ID < ?2 ORDER BY IMAGE_ID DESC LIMIT 9", nativeQuery = true)
     List<Long> findImageIdByUserAndLastId(String user, Long lastId);
 
-    @Query (value = "SELECT max(images_IMAGE_ID) FROM USER_IMAGE", nativeQuery = true)
+    @Query (value = "SELECT max(IMAGE_ID) FROM IMAGE", nativeQuery = true)
     Long findMaxId();
+
+    @Query(value = "SELECT I.IMAGE_ID FROM IMAGE AS I, USER_FOLLOWING AS UF WHERE UF.FK_USER = ?1 AND I.IMAGE_ID < ?2 AND UF.FK_FOLLOWING = I.FK_USER ORDER BY I.IMAGE_ID DESC LIMIT 9", nativeQuery = true)
+    List<Long> findFollowingIdByUser(String user, Long lastId);
 
 }
