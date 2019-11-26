@@ -3,11 +3,12 @@ package com.doggogram.backendsvc.dto;
 import com.doggogram.backendsvc.domain.Image;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class UserImagesDTO {
 
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
 }
