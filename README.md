@@ -1,5 +1,7 @@
 # Doggogram Backend
 
+[![CodeFactor](https://www.codefactor.io/repository/github/leerror/doggogram-backend/badge)](https://www.codefactor.io/repository/github/leerror/doggogram-backend)
+
 This repository holds the code for the project for the lecture *Webprogrammierung* at the Baden-Wuerttemberg Cooperative State University (DHBW) Ravensburg.
 
 tbd desc software
