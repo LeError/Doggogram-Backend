@@ -18,10 +18,10 @@ public class Comment {
     @Column (name = "COMMENT_ID")
     private Long id;
 
-    @Column (name = "COMMENT")
+    @Column (name = "COMMENT", nullable = false)
     private String comment;
 
-    @Column (name = "CREATED")
-    private Date created;
+    @Column (name = "CREATED", nullable = false)
+    private Date created = new Date();
 
 }
