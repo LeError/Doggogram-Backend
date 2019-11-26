@@ -81,7 +81,7 @@ public class ErrorController extends ResponseEntityExceptionHandler {
         List<String> details = new ArrayList<>();
         details.add(e.getMessage());
         details.add(webRequest.getDescription(false));
-        return new ResponseEntity<>(new ErrorResponse("ImageUploadException", SERVICE_UNAVAILABLE, details), HttpStatus.SERVICE_UNAVAILABLE);
+        return new ResponseEntity<>(new ErrorResponse("ImageUploadException", BAD_REQUEST, details), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
