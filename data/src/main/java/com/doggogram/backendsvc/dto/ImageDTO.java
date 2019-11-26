@@ -8,11 +8,10 @@ import java.util.Date;
 public class ImageDTO {
 
     private Long id;
-    private String filename;
+    private String image;
     private String title;
     private String bio;
     private Long likes;
     private Date created;
-    private String imageEncoded;
 
 }

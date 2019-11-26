@@ -10,6 +10,7 @@ public class UserDTO {
 
     private String user;
     private String bio;
+    private String userImage;
     private Set<Image> images;
 
 }
