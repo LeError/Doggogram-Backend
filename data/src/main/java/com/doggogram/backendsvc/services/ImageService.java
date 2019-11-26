@@ -14,7 +14,7 @@ public interface ImageService extends RestService<List<ImageDTO>> {
 
     void addImage(String user, MultipartFile image, String title, String bio) throws ImageCorruptedException;
     ImageDTO getItemById(long id) throws EntityNotFoundException;
-    UserImagesDTO getUserImagesByUser (String user, int idx) throws EntityNotFoundException;
+    UserImagesDTO getUserImagesByUser (String user, long lastId) throws EntityNotFoundException;
     UserImagesDTO getFeedImagesByLastId (long lastId);
 
 }
