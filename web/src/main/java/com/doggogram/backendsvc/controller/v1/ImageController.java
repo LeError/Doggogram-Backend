@@ -74,9 +74,9 @@ public class ImageController {
         return new ResponseEntity(imageService.getItemById(imageId), HttpStatus.OK);
     }
 
-    @GetMapping({"/user/{user}/{idx}", "/user/{user}/{idx}/"})
-    public ResponseEntity<UserImagesDTO> getUserImages(@PathVariable String user, @PathVariable int idx) throws EntityNotFoundException {
-        return new ResponseEntity(imageService.getUserImagesByUser(user, idx), HttpStatus.OK);
+    @GetMapping({"/user/{user}/{lastId}", "/user/{user}/{lastId}/"})
+    public ResponseEntity<UserImagesDTO> getUserImages(@PathVariable String user, @PathVariable long lastId) throws EntityNotFoundException {
+        return new ResponseEntity(imageService.getUserImagesByUser(user, lastId), HttpStatus.OK);
     }
 
     @GetMapping({"/feed/{lastId}", "/feed/{lastId}/"})
