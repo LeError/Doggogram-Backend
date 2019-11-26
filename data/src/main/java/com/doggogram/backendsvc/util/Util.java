@@ -17,7 +17,7 @@ public class Util {
     }
 
     public static String getJwtToken(String auth) {
-        return auth.split(" ")[1];
+        return auth.split("\\s+")[1];
     }
 
 }
