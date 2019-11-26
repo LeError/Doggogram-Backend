@@ -41,7 +41,6 @@ public class User {
     private Set<Image> images;
 
     @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
     public void addImage(Image image) {
         images.add(image);
     }
