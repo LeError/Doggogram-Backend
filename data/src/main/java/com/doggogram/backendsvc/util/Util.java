@@ -16,4 +16,8 @@ public class Util {
         return filename;
     }
 
+    public static String getJwtToken(String auth) {
+        return auth.split(" ")[1];
+    }
+
 }
