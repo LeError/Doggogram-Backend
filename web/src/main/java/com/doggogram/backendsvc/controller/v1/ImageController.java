@@ -2,6 +2,7 @@ package com.doggogram.backendsvc.controller.v1;
 
 import com.doggogram.backendsvc.dto.ImageDTO;
 import com.doggogram.backendsvc.dto.ImageListDTO;
+import com.doggogram.backendsvc.dto.UserImagesDTO;
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.JwtTokenService;
 import com.doggogram.backendsvc.util.Util;
@@ -24,7 +25,7 @@ import javax.persistence.EntityNotFoundException;
 
 @Slf4j
 @Controller
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/images")
 public class ImageController {
 
     private final ImageService imageService;
@@ -35,7 +36,7 @@ public class ImageController {
         this.jwtTokenService = jwtTokenService;
     }
 
-    @GetMapping ({"/images/$count", "/images/$count/"})
+    @GetMapping ({"/$count", "/$count/"})
     public ResponseEntity<Integer> getCount() throws ControllerCountException {
         try {
             return new ResponseEntity<>(imageService.count(), HttpStatus.OK);
@@ -44,7 +45,7 @@ public class ImageController {
         }
     }
 
-    @PostMapping({"/images/upload", "/images/upload/"})
+    @PostMapping({"/upload", "/upload/"})
     public ResponseEntity<String> handleFileUpload(@RequestHeader(value = "Authorization") String auth, @RequestParam("file") MultipartFile file, @RequestParam("bio") String bio, @RequestParam("title") String title) throws ImageUploadException {
         try {
             String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
@@ -62,15 +63,20 @@ public class ImageController {
         }
     }
 
-    @GetMapping ({"/images/all", "/images/all/"})
+    @GetMapping ({"/all", "/all/"})
     public ResponseEntity listUploadedFiles() {
         return new ResponseEntity<>(new ImageListDTO(imageService.getAllItems()) , HttpStatus.OK);
     }
 
 
-    @GetMapping({"/images/image/{imageId}", "/images/image/{imageId}/"})
+    @GetMapping({"/image/{imageId}", "/image/{imageId}/"})
     public ResponseEntity<ImageDTO> getImage(@PathVariable long imageId) throws EntityNotFoundException {
         return new ResponseEntity(imageService.getItemById(imageId), HttpStatus.OK);
+    }
+
+    @GetMapping({"/user/{user}", "/user/{user}/"})
+    public ResponseEntity<UserImagesDTO> getUserImages(@PathVariable String user) throws EntityNotFoundException {
+        return new ResponseEntity(imageService.getUserImagesByUser(user), HttpStatus.OK);
     }
 
 }
