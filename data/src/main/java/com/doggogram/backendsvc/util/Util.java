@@ -1,23 +1,24 @@
 package com.doggogram.backendsvc.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import com.doggogram.backendsvc.util.exceptions.ImageCorruptedException;
+import com.google.common.io.ByteStreams;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 public class Util {
 
-    public static String getImageName(String user, String fileExtension) {
-        String filename = user;
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("--dd-MM-yyyy--HH-mm-ss");
-        filename += dateFormat.format(date);
-        filename += "." + fileExtension;
-        return filename;
-    }
-
     public static String getJwtToken(String auth) {
         return auth.split("\\s+")[1];
+    }
+
+    public static String getEncodedImage(MultipartFile image) throws ImageCorruptedException {
+        try {
+            return Base64Utils.encodeToString(ByteStreams.toByteArray(image.getInputStream()));
+        } catch (IOException e) {
+            throw new ImageCorruptedException(e.getMessage());
+        }
     }
 
 }
