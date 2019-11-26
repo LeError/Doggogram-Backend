@@ -5,7 +5,6 @@ import com.doggogram.backendsvc.domain.User;
 import com.doggogram.backendsvc.dto.ImageDTO;
 import com.doggogram.backendsvc.dto.UserImagesDTO;
 import com.doggogram.backendsvc.mapper.ImageMapper;
-import com.doggogram.backendsvc.mapper.UserMapper;
 import com.doggogram.backendsvc.repositories.ImageRepository;
 import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.ImageService;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,13 +26,11 @@ public class ImageServiceImpl implements ImageService {
     private ImageRepository imageRepository;
     private ImageMapper imageMapper;
     private UserRepository userRepository;
-    private UserMapper userMapper;
 
-    public ImageServiceImpl(ImageRepository imageRepository, ImageMapper imageMapper, UserRepository userRepository, UserMapper userMapper) {
+    public ImageServiceImpl(ImageRepository imageRepository, ImageMapper imageMapper, UserRepository userRepository) {
         this.imageRepository = imageRepository;
         this.imageMapper = imageMapper;
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
     }
 
     @Override
@@ -67,12 +65,23 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public UserImagesDTO getUserImagesByUser (String user) throws EntityNotFoundException {
-        User userEntity = userRepository.findUserByUser(user);
-        if(userEntity == null) {
+    public UserImagesDTO getUserImagesByUser (String user, int idx) throws EntityNotFoundException {
+        if(userRepository.findUserByUser(user) == null) {
             throw new EntityNotFoundException("Can't find requested user Entity in Database!");
         }
-        return userMapper.userToUserImagesDTO(userEntity);
+        List<Long> imageIds = imageRepository.findImageIdByUser(user);
+        UserImagesDTO imagesDTO = new UserImagesDTO();
+        imagesDTO.setImages(new ArrayList<>());
+        for(int i = 0; i < 9; i++) {
+            int selected = imageIds.size() - 9 * idx - i;
+            if(selected > - 1) {
+                imagesDTO.getImages().add(imageRepository.findById(selected));
+            } else {
+                break;
+            }
+
+        }
+        return imagesDTO;
     }
 
 }
