@@ -1,15 +1,17 @@
 package com.doggogram.backendsvc.services;
 
 import com.doggogram.backendsvc.dto.ImageDTO;
-import com.doggogram.backendsvc.util.exceptions.EntityCorruptedException;
+import com.doggogram.backendsvc.util.exceptions.ImageCorruptedException;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Transactional
 public interface ImageService extends RestService<List<ImageDTO>> {
 
-    String addImage(String user, String title, String bio, String filename);
-    ImageDTO getItemById(long id) throws EntityCorruptedException;
+    void addImage(String user, MultipartFile image, String title, String bio) throws ImageCorruptedException;
+    ImageDTO getItemById(long id) throws EntityNotFoundException;
 
 }
