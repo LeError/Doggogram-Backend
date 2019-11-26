@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import java.util.Date;
@@ -22,6 +23,9 @@ public class Image {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name = "IMAGE_ID")
     private Long id;
+
+    @Column(name = "FK_USER", nullable = false)
+    private String user;
 
     @Lob
     @Column (name = "IMAGE_IMAGE", nullable = false)
@@ -40,6 +44,7 @@ public class Image {
     private Date created = new Date();
 
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn (name = "FK_IMAGE")
     private List<Comment> comments;
 
 }

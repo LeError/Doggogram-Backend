@@ -8,7 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -37,9 +40,11 @@ public class User {
     private String userImage;
 
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn (name = "FK_USER")
     private Set<Image> images;
 
-    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable (name = "USER_FOLLOWING", joinColumns = { @JoinColumn (name = "FK_USER") }, inverseJoinColumns = { @JoinColumn (name = "FK_FOLLOWING") })
     private Set<User> following;
 
     public void addImage(Image image) {
