@@ -1,8 +1,10 @@
 package com.doggogram.backendsvc.dto;
 
+import com.doggogram.backendsvc.domain.Comment;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ImageDTO {
@@ -13,5 +15,6 @@ public class ImageDTO {
     private String bio;
     private Long likes;
     private Date created;
+    private List<Comment> comments;
 
 }
