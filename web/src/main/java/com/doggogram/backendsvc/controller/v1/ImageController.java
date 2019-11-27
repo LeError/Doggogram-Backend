@@ -37,7 +37,7 @@ public class ImageController {
     }
 
     @GetMapping ({"/$count", "/$count/"})
-    public ResponseEntity<Integer> getCount() throws ControllerCountException {
+    public ResponseEntity<Long> getCount() throws ControllerCountException {
         try {
             return new ResponseEntity<>(imageService.count(), HttpStatus.OK);
         } catch(Exception e) {

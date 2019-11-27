@@ -46,8 +46,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public int count () {
-        return imageRepository.findAll().size();
+    public Long count () {
+        return imageRepository.countEntities();
     }
 
     @Override
