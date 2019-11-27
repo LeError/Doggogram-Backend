@@ -48,8 +48,8 @@ When requested displays the amount of registered users
 | method           | GET       |
 | authentication   | true      |
 | response success | 200       |
-| response fail    | 400       |
-| response         | int       |
+| response fail    | 503       |
+| response         | Long      |
 
 #### All User Endpoint
 

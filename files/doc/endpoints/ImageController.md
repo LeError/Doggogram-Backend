@@ -13,8 +13,8 @@ In this file are all Endpoints of the ImageController listed.
 When requested displays the amount of images stored by the Backend
 
  ```
-{host}/api/v1/storage/images/$count
-{host}/api/v1/storage/images/$count/
+{host}/api/v1/images/$count
+{host}/api/v1/images/$count/
  ```
 
 | Label            | Parameter |
@@ -22,8 +22,8 @@ When requested displays the amount of images stored by the Backend
 | method           | GET       |
 | authentication   | true      |
 | response success | 200       |
-| response fail    | 400       |
-| response         | int       |
+| response fail    | 503       |
+| response         | Long      |
 
 #### Image Upload Endpoint
 
@@ -33,8 +33,8 @@ They should be placed in the request with the namespaces file, title and bio.
 The user is determined by the JwtToken.   
 
  ```
-{host}/api/v1/storage/images/upload
-{host}/api/v1/storage/images/upload/
+{host}/api/v1/images/upload
+{host}/api/v1/images/upload/
  ```
 
 | Label            | Parameter |
@@ -68,8 +68,8 @@ Should never be called because of traffic. Only for test purposes.
 When requested displays the base64 encoded image of the requested image
 
  ```
-{host}/api/v1/storage/images/load/{filename:.+}
-{host}/api/v1/storage/images/load/{filename:.+}
+{host}/api/v1/images/image/{imageId}
+{host}/api/v1/images/image/{imageId}/
  ```
 
 | Label            | Parameter |
