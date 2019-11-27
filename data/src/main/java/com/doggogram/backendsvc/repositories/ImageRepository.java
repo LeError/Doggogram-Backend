@@ -23,7 +23,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query (value = "SELECT max(IMAGE_ID) FROM IMAGE", nativeQuery = true)
     Long findMaxId();
 
-    @Query(value = "SELECT I.IMAGE_ID FROM IMAGE AS I, USER_FOLLOWING AS UF WHERE UF.FK_USER = ?1 AND I.IMAGE_ID < ?2 AND UF.FK_FOLLOWING = I.FK_USER ORDER BY I.IMAGE_ID DESC LIMIT 9", nativeQuery = true)
-    List<Long> findFollowingIdByUser(String user, Long lastId);
+    @Query (value = "SELECT I.IMAGE_ID FROM IMAGE AS I, USER_FOLLOWING AS UF WHERE UF.FK_USER = ?1 AND I.IMAGE_ID < ?2 AND UF.FK_FOLLOWING = I.FK_USER ORDER BY I.IMAGE_ID DESC LIMIT 9", nativeQuery = true)
+    List<Long> findFollowingIdByUserAndLastId (String user, Long lastId);
 
 }
