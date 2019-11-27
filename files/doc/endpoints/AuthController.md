@@ -22,7 +22,7 @@ Used to Login into Backend-Service.
 | method           | POST                 |
 | authentication   | false                |
 | response success | 200                  |
-| response fail    | 404                  |
+| response fail    | 401                  |
 | response         | Bearer Token in Body |
 
 In the body should be contained:
