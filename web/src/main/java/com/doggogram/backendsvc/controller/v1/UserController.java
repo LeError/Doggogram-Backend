@@ -3,7 +3,9 @@ package com.doggogram.backendsvc.controller.v1;
 import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.dto.UserListDTO;
 import com.doggogram.backendsvc.security.requests.AuthRequest;
+import com.doggogram.backendsvc.services.JwtTokenService;
 import com.doggogram.backendsvc.services.UserService;
+import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
 import org.springframework.http.HttpStatus;
@@ -14,16 +16,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.persistence.EntityNotFoundException;
 
 @Controller
 @RequestMapping (value = "/api/v1/users")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
+    private final JwtTokenService jwtTokenService;
 
-    public  UserController(UserService userService) {
+    public  UserController (UserService userService, JwtTokenService jwtTokenService) {
         this.userService = userService;
+        this.jwtTokenService = jwtTokenService;
     }
 
     @PostMapping ( value = {"/register", "/register/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -53,6 +60,12 @@ public class UserController {
     @GetMapping ({"/user/{user}", "/user/{user}/"})
     public ResponseEntity<UserDTO> getUser(@PathVariable String user) {
         return new ResponseEntity<>(userService.findUserByUser(user), HttpStatus.OK);
+    }
+
+    @GetMapping ({"/follow/{followUser}", "/follow/{followUser}/"})
+    public ResponseEntity<Boolean> toggleFollowUser(@RequestHeader (value = "Authorization") String auth, @PathVariable String followUser) throws EntityNotFoundException {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity(userService.followUser(user, followUser), HttpStatus.CREATED);
     }
 
 }
