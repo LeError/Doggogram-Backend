@@ -39,6 +39,7 @@ public class ImageServiceImpl implements ImageService {
         imageEntity.setImage(Util.getEncodedImage(image));
         imageEntity.setTitle(title);
         imageEntity.setBio(bio);
+        imageEntity.setUser(user);
         User userEntity = userRepository.findUserByUser(user);
         userEntity.addImage(imageEntity);
         userRepository.save(userEntity);
@@ -63,13 +64,33 @@ public class ImageServiceImpl implements ImageService {
         return imageMapper.imageToImageDTO(image);
     }
 
+    @Override public UserImagesDTO getFollowedImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException {
+        if(userRepository.findUserByUser(user) == null) {
+            throw new EntityNotFoundException("Can't find requested base user Entity in Database!");
+        }
+        if(lastId <= 0) {
+            if(imageRepository.findMaxId() != null)
+                lastId = imageRepository.findMaxId() + 1;
+        } else {
+            lastId = 0;
+        }
+        UserImagesDTO imagesDTO = new UserImagesDTO();
+        for(Long imageId : imageRepository.findFollowingIdByUserAndLastId(user, lastId)) {
+            imagesDTO.getImages().add(imageRepository.findById(imageId.longValue()));
+        }
+        return imagesDTO;
+    }
+
     @Override
-    public UserImagesDTO getUserImagesByUser (String user, long lastId) throws EntityNotFoundException {
+    public UserImagesDTO getUserImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException {
         if(userRepository.findUserByUser(user) == null) {
             throw new EntityNotFoundException("Can't find requested user Entity in Database!");
         }
         if(lastId <= 0) {
+            if(imageRepository.findMaxId() != null)
             lastId = imageRepository.findMaxId() + 1;
+        } else {
+            lastId = 0;
         }
         UserImagesDTO imagesDTO = new UserImagesDTO();
         for(Long imageId : imageRepository.findImageIdByUserAndLastId(user, lastId)) {
@@ -81,7 +102,10 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public UserImagesDTO getFeedImagesByLastId (long lastId) {
         if(lastId <= 0) {
-            lastId = imageRepository.findMaxId() + 1;
+            if(imageRepository.findMaxId() != null)
+                lastId = imageRepository.findMaxId() + 1;
+        } else {
+            lastId = 0;
         }
         UserImagesDTO imagesDTO = new UserImagesDTO();
         for(Long imageId : imageRepository.findImageIdByLastId(lastId)) {
