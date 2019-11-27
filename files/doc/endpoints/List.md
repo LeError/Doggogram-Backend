@@ -22,7 +22,6 @@ In this file are all Endpoints of the Backend-API listed in short version. Go to
 | {host}/api/v1/images/upload/                     | POST      | true           | ImageController   | V1        |
 | {host}/api/v1/images/all                         | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/all/                        | GET       | true           | ImageController   | V1        |
-| {host}/api/v1/images/$count                      | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/image/{imageId}             | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/image/{imageId}/            | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/user/{user}/{lastId}        | GET       | true           | ImageController   | V1        |
