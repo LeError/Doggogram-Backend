@@ -75,13 +75,19 @@ public class ImageController {
     }
 
     @GetMapping({"/user/{user}/{lastId}", "/user/{user}/{lastId}/"})
-    public ResponseEntity<UserImagesDTO> getUserImages(@PathVariable String user, @PathVariable long lastId) throws EntityNotFoundException {
-        return new ResponseEntity(imageService.getUserImagesByUser(user, lastId), HttpStatus.OK);
+    public ResponseEntity<UserImagesDTO> getUserImages (@PathVariable String user, @PathVariable long lastId) throws EntityNotFoundException {
+        return new ResponseEntity(imageService.getUserImagesByUserAndLastId(user, lastId), HttpStatus.OK);
+    }
+
+    @GetMapping({"/discover/{lastId}", "/discover/{lastId}/"})
+    public ResponseEntity<UserImagesDTO> getDiscoverImages (@PathVariable Long lastId) throws EntityNotFoundException {
+        return new ResponseEntity(imageService.getFeedImagesByLastId(lastId), HttpStatus.OK);
     }
 
     @GetMapping({"/feed/{lastId}", "/feed/{lastId}/"})
-    public ResponseEntity<UserImagesDTO> getUserImages(@PathVariable Long lastId) throws EntityNotFoundException {
-        return new ResponseEntity(imageService.getFeedImagesByLastId(lastId), HttpStatus.OK);
+    public ResponseEntity<UserImagesDTO> getFollowingImages(@RequestHeader(value = "Authorization") String auth,@PathVariable Long lastId) throws EntityNotFoundException {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity(imageService.getFollowedImagesByUserAndLastId(user, lastId), HttpStatus.OK);
     }
 
 }
