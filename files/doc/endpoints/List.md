@@ -30,3 +30,7 @@ In this file are all Endpoints of the Backend-API listed in short version. Go to
 | {host}/api/v1/images/discover/{lastId}/          | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/feed/{lastId}               | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/feed/{lastId}/              | GET       | true           | ImageController   | V1        |
+| {host}/api/v1/comment/$count                     | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/$count/                    | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/all                        | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/all/                       | GET       | true           | CommentController | V1        |
