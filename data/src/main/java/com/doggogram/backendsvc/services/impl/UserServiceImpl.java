@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int count () {
-        return userRepository.findAll().size();
+    public Long count () {
+        return userRepository.countEntities();
     }
 
     @Override
