@@ -22,10 +22,10 @@ public class Comment {
     @Column (name = "COMMENT_ID")
     private Long id;
 
-    @Column (name = "COMMENT", nullable = false)
+    @Column (name = "COMMENT_CONTENT", nullable = false)
     private String comment;
 
-    @Column (name = "CREATED", nullable = false)
+    @Column (name = "COMMENT_CREATED", nullable = false)
     private Date created = new Date();
 
     @Column (name = "FK_IMAGE", nullable = false)
