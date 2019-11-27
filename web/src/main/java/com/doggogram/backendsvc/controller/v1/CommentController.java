@@ -1,5 +1,6 @@
 package com.doggogram.backendsvc.controller.v1;
 
+import com.doggogram.backendsvc.dto.CommentListDTO;
 import com.doggogram.backendsvc.services.CommentService;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,11 @@ public class CommentController {
         } catch(Exception e) {
             throw new ControllerCountException("Could not count Entities! Maybe the amount of Entities is to large or Service is unavailable!");
         }
+    }
+
+    @GetMapping ({"/all", "/all/"})
+    public ResponseEntity<CommentListDTO> getAllItems() {
+        return new ResponseEntity<>(new CommentListDTO(commentService.getAllItems()), HttpStatus.OK);
     }
 
 }
