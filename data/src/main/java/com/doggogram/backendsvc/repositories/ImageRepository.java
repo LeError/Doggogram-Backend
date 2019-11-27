@@ -12,6 +12,9 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Image findById(long id);
 
+    @Query(value = "SELECT count(*) AS AMOUNT_ROWS FROM IMAGE", nativeQuery = true)
+    Long countEntities ();
+
     void deleteImageById(Long id);
 
     @Query (value = "SELECT IMAGE_ID FROM IMAGE WHERE IMAGE_ID < ?1 ORDER BY IMAGE_ID DESC LIMIT 9", nativeQuery = true)
