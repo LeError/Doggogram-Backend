@@ -10,7 +10,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findUserByUser(String user);
 
-    @Query(value = "SELECT count(*) AS AMOUNT_ROWS FROM USER", nativeQuery = true)
+    @Query(value = "SELECT count(*) AS AMOUNT_ROWS FROM `USER`", nativeQuery = true)
     Long countEntities ();
 
     @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM USER_FOLLOWING WHERE FK_USER = ?1 AND FK_FOLLOWING = ?2", nativeQuery = true)
