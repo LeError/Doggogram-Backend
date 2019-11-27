@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 @Transactional
 public interface RestService<T> {
 
-    int count();
+    Long count();
     T getAllItems();
 
 }
