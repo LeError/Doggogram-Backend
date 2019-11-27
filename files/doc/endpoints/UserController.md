@@ -84,3 +84,21 @@ When requested displays the data of the requested user serialized to JSON
 | response success | 200       |
 | response fail    | 400       |
 | response         | JSON      |
+
+#### Follow User Endpoint
+
+When called toggles if the user follows the followUser.
+ Returns a Boolean that stats if he follows or not follows (true = following, false = not following).
+
+ ```
+{host}/api/v1/users/follow/{followUser}
+{host}/api/v1/users/follow/{followUser}/
+ ```
+
+| Label            | Parameter |
+| ---------------- | --------- |
+| method           | GET       |
+| authentication   | true      |
+| response success | 200       |
+| response fail    | 400       |
+| response         | JSON      |
