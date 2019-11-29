@@ -105,8 +105,8 @@ When called toggles if the user follows the followUser.
 
 #### Update User Password Endpoint
 
-When called toggles if the user follows the followUser.
- Returns a Boolean that stats if he follows or not follows (true = following, false = not following).
+When called updates user password.
+Returns new JwtToken for new Password.
 
  ```
 {host}/api/v1/users/update/password
@@ -122,9 +122,35 @@ When called toggles if the user follows the followUser.
 | response         | JSON      |
 
 Expected in Body:
+
  ```
 {
 	"oldPassword": "<PASSWORD>",
 	"newPassword": "<PASSWORD>"
+}
+ ```
+
+#### Update User Bio Endpoint
+
+When called updates user bio.
+
+ ```
+{host}/api/v1/users/update/bio
+{host}/api/v1/users/update/bio/
+ ```
+
+| Label            | Parameter |
+| ---------------- | --------- |
+| method           | POST      |
+| authentication   | true      |
+| response success | 200       |
+| response fail    | 400       |
+| response         | JSON      |
+
+Expected in Body:
+
+ ```
+{
+	"content": "<CONTENT>"
 }
  ```
