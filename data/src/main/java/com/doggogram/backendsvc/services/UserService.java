@@ -13,5 +13,6 @@ public interface UserService extends RestService<List<UserDTO>> {
     void registerUser(String user, String pass);
     boolean followUser(String user, String followUser);
     void updatePassword(String user, String oldPassword, String newPassword) throws PasswordDoesNotMatchException;
+    void updateBio(String user, String bio);
 
 }

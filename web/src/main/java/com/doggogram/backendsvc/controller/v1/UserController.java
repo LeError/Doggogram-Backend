@@ -10,6 +10,7 @@ import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import com.doggogram.backendsvc.util.exceptions.PasswordDoesNotMatchException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
 import com.doggogram.backendsvc.util.requests.AuthRequest;
+import com.doggogram.backendsvc.util.requests.ContentRequest;
 import com.doggogram.backendsvc.util.requests.PasswordRequest;
 import com.doggogram.backendsvc.util.responses.JwtTokenResponse;
 import org.springframework.http.HttpStatus;
@@ -79,6 +80,13 @@ public class UserController {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         userService.updatePassword(user, passwordRequest.getOldPassword(), passwordRequest.getNewPassword());
         return new ResponseEntity<>(authService.generateJWTToken(user, passwordRequest.getNewPassword()), HttpStatus.OK);
+    }
+
+    @PostMapping (value = {"/update/bio", "/update/bio/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateBio(@RequestHeader (value = "Authorization") String auth, @RequestBody ContentRequest contentRequest) {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        userService.updateBio(user, contentRequest.getContent());
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 
 }

@@ -74,4 +74,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void updateBio (String user, String bio) {
+        User userEntity = userRepository.findUserByUser(user);
+        userEntity.setBio(bio);
+        userRepository.save(userEntity);
+    }
+
 }
