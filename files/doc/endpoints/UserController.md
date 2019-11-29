@@ -101,4 +101,30 @@ When called toggles if the user follows the followUser.
 | authentication   | true      |
 | response success | 200       |
 | response fail    | 400       |
+| response         | Boolean   |
+
+#### Update User Password Endpoint
+
+When called toggles if the user follows the followUser.
+ Returns a Boolean that stats if he follows or not follows (true = following, false = not following).
+
+ ```
+{host}/api/v1/users/update/password
+{host}/api/v1/users/update/password/
+ ```
+
+| Label            | Parameter |
+| ---------------- | --------- |
+| method           | POST      |
+| authentication   | true      |
+| response success | 200       |
+| response fail    | 400       |
 | response         | JSON      |
+
+Expected in Body:
+ ```
+{
+	"oldPassword": "<PASSWORD>",
+	"newPassword": "<PASSWORD>"
+}
+ ```
