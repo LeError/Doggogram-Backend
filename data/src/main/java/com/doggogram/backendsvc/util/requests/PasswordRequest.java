@@ -1,4 +1,4 @@
-package com.doggogram.backendsvc.util;
+package com.doggogram.backendsvc.util.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,8 +1,8 @@
 package com.doggogram.backendsvc.controller.v1;
 
-import com.doggogram.backendsvc.security.requests.AuthRequest;
 import com.doggogram.backendsvc.services.AuthService;
 import com.doggogram.backendsvc.util.exceptions.AuthException;
+import com.doggogram.backendsvc.util.requests.AuthRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

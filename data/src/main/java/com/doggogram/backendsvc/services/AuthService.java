@@ -1,6 +1,6 @@
 package com.doggogram.backendsvc.services;
 
-import com.doggogram.backendsvc.security.responses.JwtTokenResponse;
+import com.doggogram.backendsvc.util.responses.JwtTokenResponse;
 
 import javax.transaction.Transactional;
 
