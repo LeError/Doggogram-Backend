@@ -5,6 +5,7 @@ import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.mapper.UserMapper;
 import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.UserService;
+import com.doggogram.backendsvc.util.exceptions.PasswordDoesNotMatchException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +61,17 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.save(userEntity);
         return following;
+    }
+
+    @Override
+    public void updatePassword (String user, String oldPassword, String newPassword) throws PasswordDoesNotMatchException {
+        if(passwordEncoder.matches(oldPassword, userRepository.findUserByUser(user).getPass())) {
+            User userEntity = userRepository.findUserByUser(user);
+            userEntity.setPass(passwordEncoder.encode(newPassword));
+            userRepository.save(userEntity);
+        } else {
+            throw new PasswordDoesNotMatchException("Old Password does not Match Database!");
+        }
     }
 
 }
