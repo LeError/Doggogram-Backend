@@ -3,10 +3,14 @@ package com.doggogram.backendsvc.controller.v1;
 import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.dto.UserListDTO;
 import com.doggogram.backendsvc.security.requests.AuthRequest;
+import com.doggogram.backendsvc.security.responses.JwtTokenResponse;
+import com.doggogram.backendsvc.services.AuthService;
 import com.doggogram.backendsvc.services.JwtTokenService;
 import com.doggogram.backendsvc.services.UserService;
+import com.doggogram.backendsvc.util.PasswordRequest;
 import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
+import com.doggogram.backendsvc.util.exceptions.PasswordDoesNotMatchException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,10 +31,12 @@ public class UserController {
 
     private final UserService userService;
     private final JwtTokenService jwtTokenService;
+    private final AuthService authService;
 
-    public  UserController (UserService userService, JwtTokenService jwtTokenService) {
+    public  UserController (UserService userService, JwtTokenService jwtTokenService, AuthService authService) {
         this.userService = userService;
         this.jwtTokenService = jwtTokenService;
+        this.authService = authService;
     }
 
     @PostMapping ( value = {"/register", "/register/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -66,6 +72,13 @@ public class UserController {
     public ResponseEntity<Boolean> toggleFollowUser(@RequestHeader (value = "Authorization") String auth, @PathVariable String followUser) throws EntityNotFoundException {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         return new ResponseEntity(userService.followUser(user, followUser), HttpStatus.CREATED);
+    }
+
+    @PostMapping (value = {"/update/password", "/update/password/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<JwtTokenResponse> updatePassword(@RequestHeader (value = "Authorization") String auth, @RequestBody PasswordRequest passwordRequest) throws PasswordDoesNotMatchException {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        userService.updatePassword(user, passwordRequest.getOldPassword(), passwordRequest.getNewPassword());
+        return new ResponseEntity<>(authService.generateJWTToken(user, passwordRequest.getNewPassword()), HttpStatus.OK);
     }
 
 }
