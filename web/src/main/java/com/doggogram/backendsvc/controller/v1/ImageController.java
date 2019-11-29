@@ -46,7 +46,7 @@ public class ImageController {
     }
 
     @PostMapping({"/upload", "/upload/"})
-    public ResponseEntity<String> handleFileUpload(@RequestHeader(value = "Authorization") String auth, @RequestParam("file") MultipartFile file, @RequestParam("bio") String bio, @RequestParam("title") String title) throws ImageUploadException {
+    public ResponseEntity handleFileUpload(@RequestHeader(value = "Authorization") String auth, @RequestParam("file") MultipartFile file, @RequestParam("bio") String bio, @RequestParam("title") String title) throws ImageUploadException {
         try {
             String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
             switch(FilenameUtils.getExtension(file.getOriginalFilename())) {
@@ -57,7 +57,7 @@ public class ImageController {
                 default: throw new ImageUploadException("Not a allowed file extension! Only jpg, jpeg, png and gif are allowed!");
             }
             imageService.addImage(user, file, title, bio);
-            return new ResponseEntity<>("File Upload Accepted!", HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             throw new ImageUploadException(e.getMessage());
         }
