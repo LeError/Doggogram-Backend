@@ -18,6 +18,10 @@ In this file are all Endpoints of the Backend-API listed in short version. Go to
 | {host}/api/v1/users/update/password/             | POST      | true           | UserController    | V1        |
 | {host}/api/v1/users/update/bio                   | POST      | true           | UserController    | V1        |
 | {host}/api/v1/users/update/bio/                  | POST      | true           | UserController    | V1        |
+| {host}/api/v1/users/image                        | POST      | true           | UserController    | V1        |
+| {host}/api/v1/users/image/                       | POST      | true           | UserController    | V1        |
+| {host}/api/v1/users/image/remove                 | POST      | true           | UserController    | V1        |
+| {host}/api/v1/users/image/remove/                | POST      | true           | UserController    | V1        |
 | {host}/api/v1/auth/login                         | POST      | false          | AuthController    | V1        |
 | {host}/api/v1/auth/login/                        | POST      | false          | AuthController    | V1        |
 | {host}/api/v1/images/$count                      | GET       | true           | ImageController   | V1        |

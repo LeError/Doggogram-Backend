@@ -154,3 +154,37 @@ Expected in Body:
 	"content": "<CONTENT>"
 }
  ```
+
+#### Set User Image Endpoint
+
+When called updates user profile picture.
+
+ ```
+{host}/api/v1/users/image
+{host}/api/v1/users/image/
+ ```
+
+| Label            | Parameter |
+| ---------------- | --------- |
+| method           | POST      |
+| authentication   | true      |
+| response success | 200       |
+| response fail    | 400       |
+| response         | null      |
+
+#### Remove User Image Endpoint
+
+When called removes user image.
+
+ ```
+{host}/api/v1/users/image/remove
+{host}/api/v1/users/image/remove/
+ ```
+
+| Label            | Parameter |
+| ---------------- | --------- |
+| method           | POST      |
+| authentication   | true      |
+| response success | 200       |
+| response fail    | 400       |
+| response         | null      |
