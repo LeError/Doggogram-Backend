@@ -5,9 +5,12 @@ import com.doggogram.backendsvc.dto.UserDTO;
 import com.doggogram.backendsvc.mapper.UserMapper;
 import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.UserService;
+import com.doggogram.backendsvc.util.Util;
+import com.doggogram.backendsvc.util.exceptions.ImageCorruptedException;
 import com.doggogram.backendsvc.util.exceptions.PasswordDoesNotMatchException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -78,6 +81,13 @@ public class UserServiceImpl implements UserService {
     public void updateBio (String user, String bio) {
         User userEntity = userRepository.findUserByUser(user);
         userEntity.setBio(bio);
+        userRepository.save(userEntity);
+    }
+
+    @Override
+    public void updateImage (String user, MultipartFile image) throws ImageCorruptedException {
+        User userEntity = userRepository.findUserByUser(user);
+        userEntity.setUserImage(Util.getEncodedImage(image));
         userRepository.save(userEntity);
     }
 

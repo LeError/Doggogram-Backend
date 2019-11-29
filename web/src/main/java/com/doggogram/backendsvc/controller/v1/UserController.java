@@ -7,12 +7,14 @@ import com.doggogram.backendsvc.services.JwtTokenService;
 import com.doggogram.backendsvc.services.UserService;
 import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
+import com.doggogram.backendsvc.util.exceptions.ImageUploadException;
 import com.doggogram.backendsvc.util.exceptions.PasswordDoesNotMatchException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
 import com.doggogram.backendsvc.util.requests.AuthRequest;
 import com.doggogram.backendsvc.util.requests.ContentRequest;
 import com.doggogram.backendsvc.util.requests.PasswordRequest;
 import com.doggogram.backendsvc.util.responses.JwtTokenResponse;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -87,6 +91,24 @@ public class UserController {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         userService.updateBio(user, contentRequest.getContent());
         return new ResponseEntity(null, HttpStatus.OK);
+    }
+
+    @PostMapping({"/image", "/image/"})
+    public ResponseEntity updateUserImage(@RequestHeader(value = "Authorization") String auth, @RequestParam ("file") MultipartFile file) throws ImageUploadException {
+        try {
+            String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+            switch(FilenameUtils.getExtension(file.getOriginalFilename())) {
+                case "jpg":
+                case "jpeg":
+                case "png":
+                case "gif": break;
+                default: throw new ImageUploadException("Not a allowed file extension! Only jpg, jpeg, png and gif are allowed!");
+            }
+            userService.updateImage(user, file);
+            return new ResponseEntity(null, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            throw new ImageUploadException(e.getMessage());
+        }
     }
 
 }
