@@ -17,5 +17,6 @@ public interface UserService extends RestService<List<UserDTO>> {
     void updatePassword(String user, String oldPassword, String newPassword) throws PasswordDoesNotMatchException;
     void updateBio(String user, String bio);
     void updateImage(String user, MultipartFile image) throws ImageCorruptedException;
+    void removeImage(String user);
 
 }

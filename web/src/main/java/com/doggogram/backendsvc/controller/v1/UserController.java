@@ -93,7 +93,7 @@ public class UserController {
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
-    @PostMapping({"/image", "/image/"})
+    @PostMapping ({"/image", "/image/"})
     public ResponseEntity updateUserImage(@RequestHeader(value = "Authorization") String auth, @RequestParam ("file") MultipartFile file) throws ImageUploadException {
         try {
             String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
@@ -109,6 +109,13 @@ public class UserController {
         } catch (Exception e) {
             throw new ImageUploadException(e.getMessage());
         }
+    }
+
+    @PostMapping ({"/image/remove", "/image/remove/"})
+    public ResponseEntity removeUserImage(@RequestHeader(value = "Authorization") String auth) {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        userService.removeImage(user);
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 
 }

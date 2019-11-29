@@ -91,4 +91,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
     }
 
+    @Override
+    public void removeImage (String user) {
+        User userEntity = userRepository.findUserByUser(user);
+        userEntity.setUserImage(null);
+        userRepository.save(userEntity);
+    }
+
 }
