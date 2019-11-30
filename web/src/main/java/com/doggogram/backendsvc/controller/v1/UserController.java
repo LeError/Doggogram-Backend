@@ -94,7 +94,7 @@ public class UserController {
     }
 
     @PostMapping ({"/image", "/image/"})
-    public ResponseEntity updateUserImage(@RequestHeader(value = "Authorization") String auth, @RequestParam ("file") MultipartFile file) throws ImageUploadException {
+    public ResponseEntity updateUserImage(@RequestHeader (value = "Authorization") String auth, @RequestParam ("file") MultipartFile file) throws ImageUploadException {
         try {
             String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
             switch(FilenameUtils.getExtension(file.getOriginalFilename())) {
