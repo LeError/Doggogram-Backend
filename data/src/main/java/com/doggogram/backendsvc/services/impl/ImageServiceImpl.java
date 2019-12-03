@@ -35,12 +35,12 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void addImage (String user, MultipartFile image, String title, String bio)
     throws ImageCorruptedException {
+        User userEntity = userRepository.findUserByUser(user);
         Image imageEntity = new Image();
         imageEntity.setImage(Util.getEncodedImage(image));
         imageEntity.setTitle(title);
         imageEntity.setBio(bio);
-        imageEntity.setUser(user);
-        User userEntity = userRepository.findUserByUser(user);
+        imageEntity.setOwner(userEntity);
         userEntity.addImage(imageEntity);
         userRepository.save(userEntity);
     }
