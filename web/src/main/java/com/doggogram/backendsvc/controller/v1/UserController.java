@@ -73,6 +73,11 @@ public class UserController {
         return new ResponseEntity<>(userService.findUserByUser(user), HttpStatus.OK);
     }
 
+    @GetMapping ({"/search/{user}", "/search/{user}/"})
+    public ResponseEntity<UserListDTO> searchUsers(@PathVariable String user) {
+        return new ResponseEntity<>(new UserListDTO(userService.findUsersByUser(user)), HttpStatus.OK);
+    }
+
     @GetMapping ({"/follow/{followUser}", "/follow/{followUser}/"})
     public ResponseEntity<Boolean> toggleFollowUser(@RequestHeader (value = "Authorization") String auth, @PathVariable String followUser) throws EntityNotFoundException {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));

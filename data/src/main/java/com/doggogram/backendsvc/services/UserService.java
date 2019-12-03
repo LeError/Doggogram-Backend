@@ -12,6 +12,7 @@ import java.util.List;
 public interface UserService extends RestService<List<UserDTO>> {
 
     UserDTO findUserByUser(String user);
+    List<UserDTO> findUsersByUser(String user);
     void registerUser(String user, String pass);
     boolean followUser(String user, String followUser);
     void updatePassword(String user, String oldPassword, String newPassword) throws PasswordDoesNotMatchException;
