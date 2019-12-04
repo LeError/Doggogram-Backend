@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
@@ -26,10 +25,6 @@ public class Image {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name = "IMAGE_ID")
     private Long id;
-
-    @ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "FK_USER", nullable = false)
-    private User owner;
 
     @Lob
     @Column (name = "IMAGE_IMAGE", nullable = false)
