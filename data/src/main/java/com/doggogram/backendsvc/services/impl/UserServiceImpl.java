@@ -123,4 +123,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userEntity);
     }
 
+    @Override
+    public List<UserDTO> getImageLiker (long imageId) {
+        return userRepository.findLikerByImageId(imageId).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+    }
+
 }

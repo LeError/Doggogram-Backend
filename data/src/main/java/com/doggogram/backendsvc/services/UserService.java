@@ -23,5 +23,6 @@ public interface UserService extends RestService<List<UserDTO>> {
     void updateBio(String user, String bio);
     void updateImage(String user, MultipartFile image) throws ImageCorruptedException;
     void removeImage(String user);
+    List<UserDTO> getImageLiker(long imageId);
 
 }
