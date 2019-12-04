@@ -84,6 +84,18 @@ public class UserController {
         return new ResponseEntity(userService.followUser(user, followUser), HttpStatus.CREATED);
     }
 
+    @GetMapping ({"/followers", "/followers/"})
+    public ResponseEntity<Long> getAmountFollowers(@RequestHeader (value = "Authorization") String auth) {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(userService.countFollowers(user), HttpStatus.OK);
+    }
+
+    @GetMapping ({"/following", "/following/"})
+    public ResponseEntity<Long> getAmountFollowing(@RequestHeader (value = "Authorization") String auth) {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(userService.countFollowing(user), HttpStatus.OK);
+    }
+
     @PostMapping (value = {"/update/password", "/update/password/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JwtTokenResponse> updatePassword(@RequestHeader (value = "Authorization") String auth, @RequestBody PasswordRequest passwordRequest) throws PasswordDoesNotMatchException {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));

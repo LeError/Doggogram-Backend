@@ -15,10 +15,16 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM `USER`", nativeQuery = true)
     Long countEntities ();
 
+    @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM `USER_FOLLOWING` WHERE FK_FOLLOWING = ?1", nativeQuery = true)
+    Long countFollowers (String user);
+
+    @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM `USER_FOLLOWING` WHERE FK_USER = ?1", nativeQuery = true)
+    Long countFollowing (String user);
+
     @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM USER_FOLLOWING WHERE FK_USER = ?1 AND FK_FOLLOWING = ?2", nativeQuery = true)
-    short checkIfUserFollowsUser(String user, String followUser);
+    short checkIfUserFollowsUser (String user, String followUser);
 
     @Query (value = "SELECT  USER_NAME FROM `USER` WHERE USER_NAME LIKE ?1", nativeQuery = true)
-    List<String> findUsersByUser(String user);
+    List<String> findUsersByUser (String user);
 
 }

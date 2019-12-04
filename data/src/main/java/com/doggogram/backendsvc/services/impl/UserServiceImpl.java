@@ -77,6 +77,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Long countFollowers (String user) {
+        return userRepository.countFollowers(user);
+    }
+
+    @Override
+    public Long countFollowing (String user) {
+        return userRepository.countFollowing(user);
+    }
+
+    @Override
     public void updatePassword (String user, String oldPassword, String newPassword) throws PasswordDoesNotMatchException {
         if(passwordEncoder.matches(oldPassword, userRepository.findUserByUser(user).getPass())) {
             User userEntity = userRepository.findUserByUser(user);
