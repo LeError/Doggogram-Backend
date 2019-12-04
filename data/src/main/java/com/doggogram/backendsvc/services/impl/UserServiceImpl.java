@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,11 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override public List<UserDTO> findUsersByUser (String user) {
         user += "%";
-        List<User> users = new ArrayList<>();
-        for (String userName : userRepository.findUsersByUser(user)) {
-            users.add(userRepository.findUserByUser(userName));
-        }
-        return users.stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        return userRepository.findUsersByUser(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override public void registerUser (String user, String pass) {
@@ -78,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getFollowers (String user) {
-        return userRepository.getFollowers(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        return userRepository.findFollowersByUser(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -88,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getFollowing (String user) {
-        return userRepository.getFollowing(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        return userRepository.findFollowingByUser(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override
