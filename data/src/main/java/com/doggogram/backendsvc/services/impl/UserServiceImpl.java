@@ -77,8 +77,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDTO> getFollowers (String user) {
+        return userRepository.getFollowers(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public Long countFollowers (String user) {
         return userRepository.countFollowers(user);
+    }
+
+    @Override
+    public List<UserDTO> getFollowing (String user) {
+        return userRepository.getFollowing(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override

@@ -85,12 +85,24 @@ public class UserController {
     }
 
     @GetMapping ({"/followers", "/followers/"})
+    public ResponseEntity<UserListDTO> getFollowers(@RequestHeader (value = "Authorization") String auth) {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(new UserListDTO(userService.getFollowers(user)), HttpStatus.OK);
+    }
+
+    @GetMapping ({"/followers/$count", "/followers/$count/"})
     public ResponseEntity<Long> getAmountFollowers(@RequestHeader (value = "Authorization") String auth) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         return new ResponseEntity<>(userService.countFollowers(user), HttpStatus.OK);
     }
 
     @GetMapping ({"/following", "/following/"})
+    public ResponseEntity<UserListDTO> getFollowing(@RequestHeader (value = "Authorization") String auth) {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(new UserListDTO(userService.getFollowing(user)), HttpStatus.OK);
+    }
+
+    @GetMapping ({"/following/$count", "/following/$count/"})
     public ResponseEntity<Long> getAmountFollowing(@RequestHeader (value = "Authorization") String auth) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         return new ResponseEntity<>(userService.countFollowing(user), HttpStatus.OK);

@@ -15,7 +15,9 @@ public interface UserService extends RestService<List<UserDTO>> {
     List<UserDTO> findUsersByUser(String user);
     void registerUser(String user, String pass);
     boolean followUser(String user, String followUser);
+    List<UserDTO> getFollowers(String user);
     Long countFollowers(String user);
+    List<UserDTO> getFollowing(String user);
     Long countFollowing(String user);
     void updatePassword(String user, String oldPassword, String newPassword) throws PasswordDoesNotMatchException;
     void updateBio(String user, String bio);

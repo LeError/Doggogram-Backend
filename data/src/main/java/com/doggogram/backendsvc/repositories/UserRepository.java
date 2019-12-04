@@ -21,6 +21,12 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM `USER_FOLLOWING` WHERE FK_USER = ?1", nativeQuery = true)
     Long countFollowing (String user);
 
+    @Query (value = "SELECT * FROM `USER` AS U, USER_FOLLOWING AS UF WHERE UF.FK_FOLLOWING = ?1 AND U.USER_NAME = UF.FK_USER ORDER BY U.USER_NAME", nativeQuery = true)
+    List<User> getFollowers (String user);
+
+    @Query (value = "SELECT  * FROM `USER` AS U, USER_FOLLOWING AS UF WHERE UF.FK_USER = ?1 AND U.USER_NAME = UF.FK_FOLLOWING ORDER BY U.USER_NAME", nativeQuery = true)
+    List<User> getFollowing (String user);
+
     @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM USER_FOLLOWING WHERE FK_USER = ?1 AND FK_FOLLOWING = ?2", nativeQuery = true)
     short checkIfUserFollowsUser (String user, String followUser);
 
