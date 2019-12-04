@@ -74,11 +74,7 @@ public class ImageServiceImpl implements ImageService {
         } else {
             lastId = 0;
         }
-        UserImagesDTO imagesDTO = new UserImagesDTO();
-        for(Long imageId : imageRepository.findFollowingIdByUserAndLastId(user, lastId)) {
-            imagesDTO.getImages().add(imageRepository.findById(imageId.longValue()));
-        }
-        return imagesDTO;
+        return new UserImagesDTO(imageRepository.findFollowingImagesByUserAndLastId(user, lastId));
     }
 
     @Override
@@ -92,11 +88,7 @@ public class ImageServiceImpl implements ImageService {
         } else {
             lastId = 0;
         }
-        UserImagesDTO imagesDTO = new UserImagesDTO();
-        for(Long imageId : imageRepository.findImageIdByUserAndLastId(user, lastId)) {
-            imagesDTO.getImages().add(imageRepository.findById(imageId.longValue()));
-        }
-        return imagesDTO;
+        return new UserImagesDTO(imageRepository.findImagesByUserAndLastId(user, lastId));
     }
 
     @Override
@@ -107,11 +99,7 @@ public class ImageServiceImpl implements ImageService {
         } else {
             lastId = 0;
         }
-        UserImagesDTO imagesDTO = new UserImagesDTO();
-        for(Long imageId : imageRepository.findImageIdByLastId(lastId)) {
-            imagesDTO.getImages().add(imageRepository.findById(imageId.longValue()));
-        }
-        return imagesDTO;
+        return new UserImagesDTO(imageRepository.findImagesByLastId(lastId));
     }
 
 }
