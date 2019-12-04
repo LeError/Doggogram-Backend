@@ -3,7 +3,6 @@ package com.doggogram.backendsvc.services.impl;
 import com.doggogram.backendsvc.domain.Image;
 import com.doggogram.backendsvc.domain.User;
 import com.doggogram.backendsvc.dto.ImageDTO;
-import com.doggogram.backendsvc.dto.UserImagesDTO;
 import com.doggogram.backendsvc.mapper.ImageMapper;
 import com.doggogram.backendsvc.repositories.ImageRepository;
 import com.doggogram.backendsvc.repositories.UserRepository;
@@ -70,7 +69,7 @@ public class ImageServiceImpl implements ImageService {
         return imageMapper.imageToImageDTO(image);
     }
 
-    @Override public UserImagesDTO getFollowedImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException {
+    @Override public List<ImageDTO> getFollowedImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException {
         if(userRepository.findUserByUser(user) == null) {
             throw new EntityNotFoundException("Can't find requested base user Entity in Database!");
         }
@@ -80,11 +79,11 @@ public class ImageServiceImpl implements ImageService {
         } else {
             lastId = 0;
         }
-        return new UserImagesDTO(imageRepository.findFollowingImagesByUserAndLastId(user, lastId));
+        return imageRepository.findFollowingImagesByUserAndLastId(user, lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
     }
 
     @Override
-    public UserImagesDTO getUserImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException {
+    public List<ImageDTO> getUserImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException {
         if(userRepository.findUserByUser(user) == null) {
             throw new EntityNotFoundException("Can't find requested user Entity in Database!");
         }
@@ -94,18 +93,48 @@ public class ImageServiceImpl implements ImageService {
         } else {
             lastId = 0;
         }
-        return new UserImagesDTO(imageRepository.findImagesByUserAndLastId(user, lastId));
+        return imageRepository.findImagesByUserAndLastId(user, lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
     }
 
     @Override
-    public UserImagesDTO getFeedImagesByLastId (long lastId) {
+    public List<ImageDTO> getFeedImagesByLastId (long lastId) {
         if(lastId <= 0) {
             if(imageRepository.findMaxId() != null)
                 lastId = imageRepository.findMaxId() + 1;
         } else {
             lastId = 0;
         }
-        return new UserImagesDTO(imageRepository.findImagesByLastId(lastId));
+        return imageRepository.findImagesByLastId(lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean toggleLike (String user, long imageId) throws EntityNotFoundException {
+        Image image = imageRepository.findById(imageId);
+        User userEntity = userRepository.findUserByUser(user);
+        if(imageRepository.checkIfImageIsLikedByUser(user, imageId) > 0) {
+            image.getLiker().remove(userEntity);
+            imageRepository.save(image);
+            return false;
+        }
+        image.getLiker().add(userEntity);
+        imageRepository.save(image);
+        return true;
+    }
+
+    @Override
+    public boolean isImageLikedBy (String user, long imageId) throws EntityNotFoundException {
+        if(imageRepository.checkIfImageIsLikedByUser(user, imageId) > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override public Long getImageLikes (long imageId) throws EntityNotFoundException {
+        return imageRepository.countImageLikes(imageId);
+    }
+
+    @Override public List<ImageDTO> getLikedImages (String user, long lastId) {
+        return imageRepository.findLikedImagesByUserAndLastId(user, lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
     }
 
 }

@@ -2,7 +2,6 @@ package com.doggogram.backendsvc.controller.v1;
 
 import com.doggogram.backendsvc.dto.ImageDTO;
 import com.doggogram.backendsvc.dto.ImageListDTO;
-import com.doggogram.backendsvc.dto.UserImagesDTO;
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.JwtTokenService;
 import com.doggogram.backendsvc.util.Util;
@@ -82,19 +81,42 @@ public class ImageController {
     }
 
     @GetMapping ({"/user/{user}/{lastId}", "/user/{user}/{lastId}/"})
-    public ResponseEntity<UserImagesDTO> getUserImages (@PathVariable String user, @PathVariable long lastId) throws EntityNotFoundException {
-        return new ResponseEntity(imageService.getUserImagesByUserAndLastId(user, lastId), HttpStatus.OK);
+    public ResponseEntity<ImageListDTO> getUserImages (@PathVariable String user, @PathVariable long lastId) throws EntityNotFoundException {
+        return new ResponseEntity(new ImageListDTO(imageService.getUserImagesByUserAndLastId(user, lastId)), HttpStatus.OK);
     }
 
     @GetMapping ({"/discover/{lastId}", "/discover/{lastId}/"})
-    public ResponseEntity<UserImagesDTO> getDiscoverImages (@PathVariable Long lastId) throws EntityNotFoundException {
-        return new ResponseEntity(imageService.getFeedImagesByLastId(lastId), HttpStatus.OK);
+    public ResponseEntity<ImageListDTO> getDiscoverImages (@PathVariable Long lastId) throws EntityNotFoundException {
+        return new ResponseEntity(new ImageListDTO(imageService.getFeedImagesByLastId(lastId)), HttpStatus.OK);
     }
 
     @GetMapping ({"/feed/{lastId}", "/feed/{lastId}/"})
-    public ResponseEntity<UserImagesDTO> getFollowingImages(@RequestHeader(value = "Authorization") String auth,@PathVariable Long lastId) throws EntityNotFoundException {
+    public ResponseEntity<ImageListDTO> getFollowingImages(@RequestHeader(value = "Authorization") String auth, @PathVariable Long lastId) throws EntityNotFoundException {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
-        return new ResponseEntity(imageService.getFollowedImagesByUserAndLastId(user, lastId), HttpStatus.OK);
+        return new ResponseEntity<>(new ImageListDTO(imageService.getFollowedImagesByUserAndLastId(user, lastId)), HttpStatus.OK);
+    }
+
+    @PostMapping ({"/liked", "/liked/"})
+    public ResponseEntity<Boolean> toggleImageLiked(@RequestHeader(value = "Authorization") String auth, @RequestParam("imageId") Long imageId){
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(imageService.toggleLike(user, imageId), HttpStatus.OK);
+    }
+
+    @GetMapping ({"/liked", "/liked/"})
+    public ResponseEntity<Boolean> isImageLikedBy(@RequestHeader(value = "Authorization") String auth, @RequestParam("imageId") Long imageId){
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(imageService.isImageLikedBy(user, imageId), HttpStatus.OK);
+    }
+
+    @GetMapping ({"/image/likes/{imageId}", "/image/likes/{imageId}/"})
+    public ResponseEntity<Long> getImageLikes(@PathVariable Long imageId) {
+        return new ResponseEntity<>(imageService.getImageLikes(imageId), HttpStatus.OK);
+    }
+
+    @GetMapping ({"/image/likes/{lastId}", "/image/likes/{lastId}/"})
+    public ResponseEntity<ImageListDTO> getLikedImages(@RequestHeader(value = "Authorization") String auth, @PathVariable Long lastId) {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(new ImageListDTO(imageService.getLikedImages(user, lastId)), HttpStatus.OK);
     }
 
 }

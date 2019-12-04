@@ -12,7 +12,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Image findById(long id);
 
-    @Query(value = "SELECT count(*) AS AMOUNT_ROWS FROM IMAGE", nativeQuery = true)
+    @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM IMAGE", nativeQuery = true)
     Long countEntities ();
 
     void deleteImageById(Long id);
@@ -28,5 +28,14 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query (value = "SELECT * FROM IMAGE AS I, USER_FOLLOWING AS UF WHERE UF.FK_USER = ?1 AND I.IMAGE_ID < ?2 AND UF.FK_FOLLOWING = I.FK_USER ORDER BY I.IMAGE_ID DESC LIMIT 9", nativeQuery = true)
     List<Image> findFollowingImagesByUserAndLastId (String user, Long lastId);
+
+    @Query (value = "SELECT * FROM IMAGE AS I, IMAGE_LIKED_BY AS ILB WHERE FK_USER = ?1 AND I.IMAGE_ID < ?2 AND I.IMAGE_ID = ILB.FK_IMAGE ORDER BY I.IMAGE_ID DESC LIMIT 9", nativeQuery = true)
+    List<Image> findLikedImagesByUserAndLastId (String user, Long lastId);
+
+    @Query (value = "SELECT count(*) FROM IMAGE_LIKED_BY WHERE FK_USER = ?1 AND FK_IMAGE = ?2", nativeQuery = true)
+    Long checkIfImageIsLikedByUser(String user, Long imageId);
+
+    @Query (value = "SELECT count(*) FROM IMAGE_LIKED_BY WHERE FK_IMAGE = ?1", nativeQuery = true)
+    Long countImageLikes(Long imageId);
 
 }
