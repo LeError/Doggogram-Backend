@@ -13,6 +13,7 @@ import java.util.List;
 public interface ImageService extends RestService<List<ImageDTO>> {
 
     void addImage(String user, MultipartFile image, String title, String bio) throws ImageCorruptedException;
+    void removeImage(long imageId) throws EntityNotFoundException;
     ImageDTO getItemById(long id) throws EntityNotFoundException;
     UserImagesDTO getFollowedImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException;
     UserImagesDTO getUserImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException;
