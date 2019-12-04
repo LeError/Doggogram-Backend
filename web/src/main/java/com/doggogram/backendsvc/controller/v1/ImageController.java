@@ -113,7 +113,7 @@ public class ImageController {
         return new ResponseEntity<>(imageService.getImageLikes(imageId), HttpStatus.OK);
     }
 
-    @GetMapping ({"/image/likes/{lastId}", "/image/likes/{lastId}/"})
+    @GetMapping ({"/liked/{lastId}", "/liked/{lastId}/"})
     public ResponseEntity<ImageListDTO> getLikedImages(@RequestHeader(value = "Authorization") String auth, @PathVariable Long lastId) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         return new ResponseEntity<>(new ImageListDTO(imageService.getLikedImages(user, lastId)), HttpStatus.OK);
