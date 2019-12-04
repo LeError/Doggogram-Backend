@@ -147,7 +147,7 @@ public class UserController {
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
-    @GetMapping ({"/image/liker/", "/image/liker/"})
+    @GetMapping ({"/images/liker/{imageId}", "/images/liker/{imageId}/"})
     public ResponseEntity<UserListDTO> getImageLiker(@PathVariable Long imageId) {
         return new ResponseEntity<>(new UserListDTO(userService.getImageLiker(imageId)), HttpStatus.OK);
     }
