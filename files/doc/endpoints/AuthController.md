@@ -5,8 +5,8 @@ In this file are all Endpoints of the AuthController listed.
 | Label          | Parameter |
 | -------------- | --------- |
 | version        | V1        |
-| authentication | both      |
-| method         | both      |
+| authentication | false     |
+| method         | POST      |
 
 #### Login Endpoint
 
@@ -17,19 +17,17 @@ Used to Login into Backend-Service.
 {host}/api/v1/auth/login/
  ```
 
-| Label            | Parameter            |
-| ---------------- | -------------------- |
-| method           | POST                 |
-| authentication   | false                |
-| response success | 200                  |
-| response fail    | 401                  |
-| response         | Bearer Token in Body |
+| Label            | Parameter                   |
+| ---------------- | --------------------------- |
+| method           | POST                        |
+| authentication   | false                       |
+| response success | 200                         |
+| response fail    | 401                         |
+| response         | JSON (Bearer Token in Body) |
 
-In the body should be contained:
+In the body should be contained (form-data):
 
-```json
-{
-	"user": "<USERNAME>",
-	"pass": "<PASSWORD>"
-}
-```
+| Label            | Typ                         |
+| ---------------- | --------------------------- |
+| user             | text                        |
+| password         | text                        |
