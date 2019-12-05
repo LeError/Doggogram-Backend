@@ -41,4 +41,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query (value = "SELECT count(*) FROM IMAGE WHERE FK_USER = ?1 AND IMAGE_ID = ?2", nativeQuery = true)
     Long checkImageOwnership(String user, long imageId);
 
+    @Query (value = "SELECT * FROM IMAGE AS I, COMMENT AS C WHERE C.COMMENT_ID = ?1 AND C.FK_IMAGE = I.IMAGE_ID", nativeQuery = true)
+    Image findImageByCommentId(long commentId);
+
 }
