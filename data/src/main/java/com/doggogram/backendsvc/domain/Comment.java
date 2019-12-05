@@ -28,9 +28,6 @@ public class Comment {
     @Column (name = "COMMENT_CREATED", nullable = false)
     private Date created = new Date();
 
-    @Column (name = "FK_IMAGE", nullable = false)
-    private Long image;
-
     @ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_USER", nullable = false)
     private User author;
