@@ -47,14 +47,14 @@ public class CommentController {
     public ResponseEntity addComment(@RequestHeader (value = "Authorization") String auth, @RequestParam("content") String content, @RequestParam("imageId") long imageId) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         commentService.addComment(user, content, imageId);
-        return new ResponseEntity(null, HttpStatus.CREATED);
+        return new ResponseEntity(null, HttpStatus.NO_CONTENT);
     }
 
     @PostMapping ({"/update", "/update/"})
     public ResponseEntity updateComment(@RequestHeader (value = "Authorization") String auth, @RequestParam("content") String content, @RequestParam("commentId") long commentId) throws CommentOwnershipException {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         commentService.updateComment(user, content, commentId);
-        return new ResponseEntity(null, HttpStatus.ACCEPTED);
+        return new ResponseEntity(null, HttpStatus.NO_CONTENT);
     }
 
     @PostMapping ({"/remove", "/remove/"})
@@ -62,20 +62,20 @@ public class CommentController {
     throws CommentOwnershipException {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         commentService.removeComment(user, commentId);
-        return new ResponseEntity(null, HttpStatus.OK);
+        return new ResponseEntity(null, HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping ({"/image/comment/{commentId}", "/image/comment/{commentId}/"})
+    @GetMapping ({"/comment/{commentId}", "/comment/{commentId}/"})
     public ResponseEntity<CommentDTO> getImageComment(@PathVariable Long commentId) {
         return new ResponseEntity<>(commentService.getComment(commentId), HttpStatus.OK);
     }
 
-    @GetMapping ({"/images/comments/{imageId}", "/images/comments/{imageId}/"})
+    @GetMapping ({"/image/comments/{imageId}", "/image/comments/{imageId}/"})
     public ResponseEntity<CommentListDTO> getImageComments(@PathVariable Long imageId) {
         return new ResponseEntity<>(new CommentListDTO(commentService.getCommentsOfImage(imageId)), HttpStatus.OK);
     }
 
-    @GetMapping ({"/images/$count/{imageId}", "/images/$count/{imageId}/"})
+    @GetMapping ({"/image/$count/{imageId}", "/image/$count/{imageId}/"})
     public ResponseEntity<Long> getCommentCountForImage(@PathVariable Long imageId) {
         return new ResponseEntity<>(commentService.countCommentsOnImage(imageId), HttpStatus.OK);
     }
