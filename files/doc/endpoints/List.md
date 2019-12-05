@@ -1,7 +1,7 @@
 # List of all Endpoints
 
 In this file are all Endpoints of the Backend-API listed in short version. Go to controller files for a detailed overview.
-Version one of the API features a total of 39 Endpoints with two mappings each (with or without a / at the end).
+Version one of the API features a total of 39 Endpoints with two mappings each (with or without a "/" at the end).
 
 | Endpoint                                         | Method    | Authentication | Controller        | Version   |
 | ------------------------------------------------ | --------- | -------------- | ----------------- | --------- |
