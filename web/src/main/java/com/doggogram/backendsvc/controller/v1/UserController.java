@@ -73,8 +73,8 @@ public class UserController {
         return new ResponseEntity<>(new UserListDTO(userService.findUsersByUser(user)), HttpStatus.OK);
     }
 
-    @GetMapping ({"/follow/{followUser}", "/follow/{followUser}/"})
-    public ResponseEntity<Boolean> toggleFollowUser(@RequestHeader (value = "Authorization") String auth, @PathVariable String followUser) throws EntityNotFoundException {
+    @PostMapping ({"/follow", "/follow/"})
+    public ResponseEntity<Boolean> toggleFollowUser(@RequestHeader (value = "Authorization") String auth, @RequestParam("followUser") String followUser) throws EntityNotFoundException {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         return new ResponseEntity(userService.followUser(user, followUser), HttpStatus.CREATED);
     }
@@ -100,7 +100,7 @@ public class UserController {
         return new ResponseEntity<>(new UserListDTO(userService.getFollowing(user)), HttpStatus.OK);
     }
 
-    @GetMapping ({"/following/{user}/$count", "/following/{user}/$count/"})
+    @GetMapping ({"/following/$count/{user}", "/following/$count/{user}/"})
     public ResponseEntity<Long> getAmountFollowing(@PathVariable String user) {
         return new ResponseEntity<>(userService.countFollowing(user), HttpStatus.OK);
     }
