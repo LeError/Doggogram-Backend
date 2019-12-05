@@ -43,7 +43,7 @@ public class UserController {
     public ResponseEntity createCustomer(@RequestParam("user") String user, @RequestParam("password") String pass) throws UserRegistrationException {
         try {
             userService.registerUser(user, pass);
-            return new ResponseEntity<>(null, HttpStatus.CREATED);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new UserRegistrationException("Could not register User! Contact Administrator if Problem persists!");
         }
@@ -85,7 +85,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping ({"/followers/{user}", "/followers/{user}/"})
+    @GetMapping ({"/followers/user/{user}", "/followers/user/{user}/"})
     public ResponseEntity<UserListDTO> getFollowers(@PathVariable String user) {
         return new ResponseEntity<>(new UserListDTO(userService.getFollowers(user)), HttpStatus.OK);
     }
@@ -95,7 +95,7 @@ public class UserController {
         return new ResponseEntity<>(userService.countFollowers(user), HttpStatus.OK);
     }
 
-    @GetMapping ({"/following/{user}", "/following/{user}/"})
+    @GetMapping ({"/following/user/{user}", "/following/user/{user}/"})
     public ResponseEntity<UserListDTO> getFollowing(@PathVariable String user) {
         return new ResponseEntity<>(new UserListDTO(userService.getFollowing(user)), HttpStatus.OK);
     }
@@ -116,7 +116,7 @@ public class UserController {
     public ResponseEntity updateBio(@RequestHeader (value = "Authorization") String auth, @RequestParam("content") String content) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         userService.updateBio(user,content);
-        return new ResponseEntity(null, HttpStatus.OK);
+        return new ResponseEntity(null, HttpStatus.NO_CONTENT);
     }
 
     @PostMapping ({"/image", "/image/"})
@@ -131,7 +131,7 @@ public class UserController {
                 default: throw new ImageUploadException("Not a allowed file extension! Only jpg, jpeg, png and gif are allowed!");
             }
             userService.updateImage(user, file);
-            return new ResponseEntity(null, HttpStatus.ACCEPTED);
+            return new ResponseEntity(null, HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new ImageUploadException(e.getMessage());
         }
@@ -141,7 +141,7 @@ public class UserController {
     public ResponseEntity removeUserImage(@RequestHeader(value = "Authorization") String auth) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         userService.removeImage(user);
-        return new ResponseEntity(null, HttpStatus.OK);
+        return new ResponseEntity(null, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping ({"/images/liker/{imageId}", "/images/liker/{imageId}/"})
