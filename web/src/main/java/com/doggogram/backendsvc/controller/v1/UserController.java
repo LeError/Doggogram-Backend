@@ -10,9 +10,6 @@ import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
 import com.doggogram.backendsvc.util.exceptions.ImageUploadException;
 import com.doggogram.backendsvc.util.exceptions.PasswordDoesNotMatchException;
 import com.doggogram.backendsvc.util.exceptions.UserRegistrationException;
-import com.doggogram.backendsvc.util.requests.AuthRequest;
-import com.doggogram.backendsvc.util.requests.ContentRequest;
-import com.doggogram.backendsvc.util.requests.PasswordRequest;
 import com.doggogram.backendsvc.util.responses.JwtTokenResponse;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
@@ -22,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,10 +40,10 @@ public class UserController {
         this.authService = authService;
     }
 
-    @PostMapping ( value = {"/register", "/register/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createCustomer(@RequestBody AuthRequest authRequest) throws UserRegistrationException {
+    @PostMapping ( value = {"/register", "/register/"})
+    public ResponseEntity createCustomer(@RequestParam("user") String user, @RequestParam("password") String pass) throws UserRegistrationException {
         try {
-            userService.registerUser(authRequest.getUser(), authRequest.getPass());
+            userService.registerUser(user, pass);
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         } catch (Exception e) {
             throw new UserRegistrationException("Could not register User! Contact Administrator if Problem persists!");
@@ -109,16 +105,16 @@ public class UserController {
     }
 
     @PostMapping (value = {"/update/password", "/update/password/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<JwtTokenResponse> updatePassword(@RequestHeader (value = "Authorization") String auth, @RequestBody PasswordRequest passwordRequest) throws PasswordDoesNotMatchException {
+    public ResponseEntity<JwtTokenResponse> updatePassword(@RequestHeader (value = "Authorization") String auth, @RequestParam("oldPassword") String oPass, @RequestParam("newPassword") String nPass) throws PasswordDoesNotMatchException {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
-        userService.updatePassword(user, passwordRequest.getOldPassword(), passwordRequest.getNewPassword());
-        return new ResponseEntity<>(authService.generateJWTToken(user, passwordRequest.getNewPassword()), HttpStatus.OK);
+        userService.updatePassword(user,oPass, nPass);
+        return new ResponseEntity<>(authService.generateJWTToken(user, nPass), HttpStatus.OK);
     }
 
     @PostMapping (value = {"/update/bio", "/update/bio/"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateBio(@RequestHeader (value = "Authorization") String auth, @RequestBody ContentRequest contentRequest) {
+    public ResponseEntity updateBio(@RequestHeader (value = "Authorization") String auth, @RequestParam("content") String content) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
-        userService.updateBio(user, contentRequest.getContent());
+        userService.updateBio(user,content);
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
