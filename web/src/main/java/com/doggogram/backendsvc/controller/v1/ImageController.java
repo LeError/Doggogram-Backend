@@ -57,7 +57,7 @@ public class ImageController {
                 default: throw new ImageUploadException("Not a allowed file extension! Only jpg, jpeg, png and gif are allowed!");
             }
             imageService.addImage(user, file, title, bio);
-            return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ImageUploadException(e.getMessage());
@@ -67,7 +67,7 @@ public class ImageController {
     @PostMapping ({"/remove", "/remove/"})
     public ResponseEntity deleteImage(@RequestHeader(value = "Authorization") String auth, @RequestParam("imageId") Long imageId) {
         imageService.removeImage(imageId);
-        return new ResponseEntity(null, HttpStatus.OK);
+        return new ResponseEntity(null, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping ({"/all", "/all/"})
@@ -103,8 +103,8 @@ public class ImageController {
         return new ResponseEntity<>(imageService.toggleLike(user, imageId), HttpStatus.OK);
     }
 
-    @GetMapping ({"/liked", "/liked/"})
-    public ResponseEntity<Boolean> isImageLikedBy(@RequestHeader(value = "Authorization") String auth, @RequestParam("imageId") Long imageId){
+    @GetMapping ({"/liked/{imageId}", "/liked/{imageId}/"})
+    public ResponseEntity<Boolean> isImageLikedBy(@RequestHeader(value = "Authorization") String auth, @PathVariable Long imageId){
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         return new ResponseEntity<>(imageService.isImageLikedBy(user, imageId), HttpStatus.OK);
     }
@@ -114,7 +114,7 @@ public class ImageController {
         return new ResponseEntity<>(imageService.getImageLikes(imageId), HttpStatus.OK);
     }
 
-    @GetMapping ({"/liked/{lastId}", "/liked/{lastId}/"})
+    @GetMapping ({"/image/liked/{lastId}", "/image/liked/{lastId}/"})
     public ResponseEntity<ImageListDTO> getLikedImages(@RequestHeader(value = "Authorization") String auth, @PathVariable Long lastId) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         return new ResponseEntity<>(new ImageListDTO(imageService.getLikedImages(user, lastId)), HttpStatus.OK);
