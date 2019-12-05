@@ -13,6 +13,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query (value = "SELECT count(*) AS AMOUNT_ROWS FROM COMMENT", nativeQuery = true)
     Long countEntities ();
 
+    @Query (value = "SELECT count(*) FROM COMMENT WHERE FK_IMAGE = ?1", nativeQuery = true)
+    Long countCommentsOnImage(long imageId);
+
     void deleteCommentById(long imageId);
 
     Comment findCommentById(long imageId);

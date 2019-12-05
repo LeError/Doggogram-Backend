@@ -80,4 +80,10 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDTO> getCommentsOfImage (long imageId) {
         return commentRepository.findCommentsByImageId(imageId).stream().map(commentMapper::commentToCommentDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public Long countCommentsOnImage (long imageId) {
+        return commentRepository.countCommentsOnImage(imageId);
+    }
+
 }

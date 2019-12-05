@@ -14,5 +14,6 @@ public interface CommentService extends RestService<List<CommentDTO>> {
     void removeComment(String user, long commentId) throws CommentOwnershipException;
     CommentDTO getComment(long commentId);
     List<CommentDTO> getCommentsOfImage (long imageId);
+    Long countCommentsOnImage(long imageId);
 
 }

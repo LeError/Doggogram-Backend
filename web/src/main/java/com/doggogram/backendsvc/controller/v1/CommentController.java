@@ -70,11 +70,14 @@ public class CommentController {
         return new ResponseEntity<>(commentService.getComment(commentId), HttpStatus.OK);
     }
 
-    @GetMapping ({"/images", "/images/"})
+    @GetMapping ({"/images/comments/{imageId}", "/images/comments/{imageId}/"})
     public ResponseEntity<CommentListDTO> getImageComments(@PathVariable Long imageId) {
         return new ResponseEntity<>(new CommentListDTO(commentService.getCommentsOfImage(imageId)), HttpStatus.OK);
     }
 
-
+    @GetMapping ({"/images/$count/{imageId}", "/images/$count/{imageId}/"})
+    public ResponseEntity<Long> getCommentCountForImage(@PathVariable Long imageId) {
+        return new ResponseEntity<>(commentService.countCommentsOnImage(imageId), HttpStatus.OK);
+    }
 
 }
