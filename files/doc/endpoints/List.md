@@ -77,9 +77,9 @@ Version one of the API features a total of 39 Endpoints with two mappings each (
 | {host}/api/v1/comment/update/                    | POST      | true           | CommentController | V1        |
 | {host}/api/v1/comment/remove                     | POST      | true           | CommentController | V1        |
 | {host}/api/v1/comment/remove/                    | POST      | true           | CommentController | V1        |
-| {host}/api/v1/comment/image/comment/{commentId}  | GET       | true           | CommentController | V1        |
-| {host}/api/v1/comment/image/comment/{commentId}/ | GET       | true           | CommentController | V1        |
-| {host}/api/v1/comment/images/comments/{imageId}  | GET       | true           | CommentController | V1        |
-| {host}/api/v1/comment/images/comments/{imageId}/ | GET       | true           | CommentController | V1        |
-| {host}/api/v1/comment/images/$count/{imageId}    | GET       | true           | CommentController | V1        |
-| {host}/api/v1/comment/images/$count/{imageId}/   | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/comment/{commentId}        | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/comment/{commentId}/       | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/image/comments/{imageId}   | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/image/comments/{imageId}/  | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/image/$count/{imageId}     | GET       | true           | CommentController | V1        |
+| {host}/api/v1/comment/image/$count/{imageId}/    | GET       | true           | CommentController | V1        |
