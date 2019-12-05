@@ -57,10 +57,10 @@ Version one of the API features a total of 39 Endpoints with two mappings each (
 | {host}/api/v1/images/feed/{lastId}/              | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/liked                       | POST      | true           | ImageController   | V1        |
 | {host}/api/v1/images/liked/                      | POST      | true           | ImageController   | V1        |
-| {host}/api/v1/images/liked                       | GET       | true           | ImageController   | V1        |
-| {host}/api/v1/images/liked/                      | GET       | true           | ImageController   | V1        |
-| {host}/api/v1/images/liked/{lastId}              | GET       | true           | ImageController   | V1        |
-| {host}/api/v1/images/liked/{lastId}/             | GET       | true           | ImageController   | V1        |
+| {host}/api/v1/images/liked/{imageId}             | GET       | true           | ImageController   | V1        |
+| {host}/api/v1/images/liked/{imageId}/            | GET       | true           | ImageController   | V1        |
+| {host}/api/v1/images/image/liked/{lastId}        | GET       | true           | ImageController   | V1        |
+| {host}/api/v1/images/image/liked/{lastId}/       | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/image/likes/{lastId}        | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/image/likes/{lastId}/       | GET       | true           | ImageController   | V1        |
 | {host}/api/v1/images/update/title                | POST      | true           | ImageController   | V1        |
