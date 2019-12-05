@@ -80,27 +80,29 @@ public class UserController {
         return new ResponseEntity(userService.followUser(user, followUser), HttpStatus.CREATED);
     }
 
-    @GetMapping ({"/followers", "/followers/"})
-    public ResponseEntity<UserListDTO> getFollowers(@RequestHeader (value = "Authorization") String auth) {
+    @GetMapping ({"/username", "/username/"})
+    public ResponseEntity<String> getOwnUser(@RequestHeader (value = "Authorization") String auth) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping ({"/followers/{user}", "/followers/{user}/"})
+    public ResponseEntity<UserListDTO> getFollowers(@PathVariable String user) {
         return new ResponseEntity<>(new UserListDTO(userService.getFollowers(user)), HttpStatus.OK);
     }
 
-    @GetMapping ({"/followers/$count", "/followers/$count/"})
-    public ResponseEntity<Long> getAmountFollowers(@RequestHeader (value = "Authorization") String auth) {
-        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+    @GetMapping ({"/followers/$count/{user}", "/followers/$count/{user}/"})
+    public ResponseEntity<Long> getAmountFollowers(@PathVariable String user) {
         return new ResponseEntity<>(userService.countFollowers(user), HttpStatus.OK);
     }
 
-    @GetMapping ({"/following", "/following/"})
-    public ResponseEntity<UserListDTO> getFollowing(@RequestHeader (value = "Authorization") String auth) {
-        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+    @GetMapping ({"/following/{user}", "/following/{user}/"})
+    public ResponseEntity<UserListDTO> getFollowing(@PathVariable String user) {
         return new ResponseEntity<>(new UserListDTO(userService.getFollowing(user)), HttpStatus.OK);
     }
 
-    @GetMapping ({"/following/$count", "/following/$count/"})
-    public ResponseEntity<Long> getAmountFollowing(@RequestHeader (value = "Authorization") String auth) {
-        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+    @GetMapping ({"/following/{user}/$count", "/following/{user}/$count/"})
+    public ResponseEntity<Long> getAmountFollowing(@PathVariable String user) {
         return new ResponseEntity<>(userService.countFollowing(user), HttpStatus.OK);
     }
 
