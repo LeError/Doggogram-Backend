@@ -19,12 +19,12 @@ Version one of the API features a total of 39 Endpoints with two mappings each (
 | {host}/api/v1/users/follow/                      | POST      | true           | UserController    | V1        |
 | {host}/api/v1/users/username                     | GET       | true           | UserController    | V1        |
 | {host}/api/v1/users/username/                    | GET       | true           | UserController    | V1        |
-| {host}/api/v1/users/following/{user}             | GET       | true           | UserController    | V1        |
-| {host}/api/v1/users/following/{user}/            | GET       | true           | UserController    | V1        |
+| {host}/api/v1/users/following/user/{user}        | GET       | true           | UserController    | V1        |
+| {host}/api/v1/users/following/user/{user}/       | GET       | true           | UserController    | V1        |
 | {host}/api/v1/users/following/$count/{user}      | GET       | true           | UserController    | V1        |
 | {host}/api/v1/users/following/$count/{user}/     | GET       | true           | UserController    | V1        |
-| {host}/api/v1/users/followers/{user}             | GET       | true           | UserController    | V1        |
-| {host}/api/v1/users/followers/{user}/            | GET       | true           | UserController    | V1        |
+| {host}/api/v1/users/followers/user/{user}        | GET       | true           | UserController    | V1        |
+| {host}/api/v1/users/followers/user/{user}/       | GET       | true           | UserController    | V1        |
 | {host}/api/v1/users/followers/$count/{user}      | GET       | true           | UserController    | V1        |
 | {host}/api/v1/users/followers/$count/{user}      | GET       | true           | UserController    | V1        |
 | {host}/api/v1/users/update/password              | POST      | true           | UserController    | V1        |
