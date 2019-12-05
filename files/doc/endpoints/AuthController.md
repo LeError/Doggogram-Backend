@@ -7,6 +7,8 @@ In this file are all Endpoints of the AuthController listed.
 | version        | V1        |
 | authentication | false     |
 | method         | POST      |
+| endpoints      | 1         |
+| mappings       | 2         |
 
 #### Login Endpoint
 
@@ -22,7 +24,6 @@ Used to Login into Backend-Service.
 | method           | POST                        |
 | authentication   | false                       |
 | response success | 200                         |
-| response fail    | 401                         |
 | response         | JSON (Bearer Token in Body) |
 
 In the body should be contained (form-data):
