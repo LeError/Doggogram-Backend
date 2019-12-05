@@ -65,14 +65,16 @@ public class CommentController {
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
-    @GetMapping ({"/image/{commentId}", "/image/{commentId}/"})
+    @GetMapping ({"/image/comment/{commentId}", "/image/comment/{commentId}/"})
     public ResponseEntity<CommentDTO> getImageComment(@PathVariable Long commentId) {
         return new ResponseEntity<>(commentService.getComment(commentId), HttpStatus.OK);
     }
 
-    @GetMapping ({"/image/all", "/image/all/"})
+    @GetMapping ({"/images", "/images/"})
     public ResponseEntity<CommentListDTO> getImageComments(@PathVariable Long imageId) {
         return new ResponseEntity<>(new CommentListDTO(commentService.getCommentsOfImage(imageId)), HttpStatus.OK);
     }
+
+
 
 }
