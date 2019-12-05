@@ -2,6 +2,7 @@ package com.doggogram.backendsvc.services;
 
 import com.doggogram.backendsvc.dto.ImageDTO;
 import com.doggogram.backendsvc.util.exceptions.ImageCorruptedException;
+import com.doggogram.backendsvc.util.exceptions.ImageOwnershipException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,5 +22,9 @@ public interface ImageService extends RestService<List<ImageDTO>> {
     boolean isImageLikedBy(String user, long imageId) throws EntityNotFoundException;
     Long getImageLikes(long imageId) throws EntityNotFoundException;
     List<ImageDTO> getLikedImages(String user, long lastId);
+    void updateTitle(String user, String content, long imageId)
+    throws ImageOwnershipException;
+    void updateBio(String user, String content, long imageId)
+    throws ImageOwnershipException;
 
 }

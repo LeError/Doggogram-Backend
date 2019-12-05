@@ -6,6 +6,7 @@ import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.services.JwtTokenService;
 import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.ControllerCountException;
+import com.doggogram.backendsvc.util.exceptions.ImageOwnershipException;
 import com.doggogram.backendsvc.util.exceptions.ImageUploadException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -117,6 +118,20 @@ public class ImageController {
     public ResponseEntity<ImageListDTO> getLikedImages(@RequestHeader(value = "Authorization") String auth, @PathVariable Long lastId) {
         String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
         return new ResponseEntity<>(new ImageListDTO(imageService.getLikedImages(user, lastId)), HttpStatus.OK);
+    }
+
+    @PostMapping ({"/update/title", "/update/title/"})
+    public ResponseEntity updateTitle(@RequestHeader(value = "Authorization") String auth, @RequestParam("imageId") Long imageId, @RequestParam("content") String content) throws ImageOwnershipException {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        imageService.updateTitle(user, content, imageId);
+        return new ResponseEntity(null, HttpStatus.OK);
+    }
+
+    @PostMapping ({"/update/bio", "/update/bio/"})
+    public ResponseEntity updateBio(@RequestHeader(value = "Authorization") String auth, @RequestParam("imageId") Long imageId, @RequestParam("content") String content) throws ImageOwnershipException {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        imageService.updateBio(user, content, imageId);
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 
 }

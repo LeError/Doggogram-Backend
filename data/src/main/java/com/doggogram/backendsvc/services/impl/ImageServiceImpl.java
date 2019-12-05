@@ -9,6 +9,7 @@ import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.ImageService;
 import com.doggogram.backendsvc.util.Util;
 import com.doggogram.backendsvc.util.exceptions.ImageCorruptedException;
+import com.doggogram.backendsvc.util.exceptions.ImageOwnershipException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -129,12 +130,36 @@ public class ImageServiceImpl implements ImageService {
         return false;
     }
 
-    @Override public Long getImageLikes (long imageId) throws EntityNotFoundException {
+    @Override
+    public Long getImageLikes (long imageId) throws EntityNotFoundException {
         return imageRepository.countImageLikes(imageId);
     }
 
-    @Override public List<ImageDTO> getLikedImages (String user, long lastId) {
+    @Override
+    public List<ImageDTO> getLikedImages (String user, long lastId) {
         return imageRepository.findLikedImagesByUserAndLastId(user, lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateTitle (String user, String content, long imageId) throws ImageOwnershipException {
+        if(imageRepository.checkImageOwnership(user, imageId) > 0) {
+            Image image = imageRepository.findById(imageId);
+            image.setTitle(content);
+            imageRepository.save(image);
+        } else {
+            throw new ImageOwnershipException("Not Owner of Image!");
+        }
+    }
+
+    @Override
+    public void updateBio (String user, String content, long imageId) throws ImageOwnershipException {
+        if(imageRepository.checkImageOwnership(user, imageId) > 0) {
+            Image image = imageRepository.findById(imageId);
+            image.setBio(content);
+            imageRepository.save(image);
+        } else {
+            throw new ImageOwnershipException("Not Owner of Image!");
+        }
     }
 
 }
