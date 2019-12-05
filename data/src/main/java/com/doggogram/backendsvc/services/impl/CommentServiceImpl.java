@@ -45,7 +45,6 @@ public class CommentServiceImpl implements CommentService {
         Image image = imageRepository.findById(imageId);
         image.getComments().add(comment);
         imageRepository.save(image);
-        commentRepository.save(comment);
     }
 
     @Override
