@@ -1,6 +1,5 @@
 package com.doggogram.backendsvc.dto;
 
-import com.doggogram.backendsvc.domain.User;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +8,8 @@ import java.util.Date;
 public class CommentDTO {
 
     private Long id;
-    private User user;
+    private String user;
+    private String userImage;
     private String comment;
     private Date created;
 

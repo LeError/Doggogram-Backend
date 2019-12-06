@@ -1,20 +1,20 @@
 package com.doggogram.backendsvc.dto;
 
-import com.doggogram.backendsvc.domain.Comment;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 public class ImageDTO {
 
     private Long id;
     private String image;
+    private String user;
+    private String userImage;
     private String title;
     private String bio;
     private Long likes;
     private Date created;
-    private List<Comment> comments;
+    private Long comments;
 
 }
