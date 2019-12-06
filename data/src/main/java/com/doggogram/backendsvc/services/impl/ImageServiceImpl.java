@@ -3,7 +3,7 @@ package com.doggogram.backendsvc.services.impl;
 import com.doggogram.backendsvc.domain.Image;
 import com.doggogram.backendsvc.domain.User;
 import com.doggogram.backendsvc.dto.ImageDTO;
-import com.doggogram.backendsvc.mapper.ImageMapper;
+import com.doggogram.backendsvc.mapper.Mapper;
 import com.doggogram.backendsvc.repositories.ImageRepository;
 import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.ImageService;
@@ -22,13 +22,13 @@ import java.util.stream.Collectors;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private ImageRepository imageRepository;
-    private ImageMapper imageMapper;
-    private UserRepository userRepository;
+    private final ImageRepository imageRepository;
+    private final UserRepository userRepository;
+    private final Mapper mapper;
 
-    public ImageServiceImpl(ImageRepository imageRepository, ImageMapper imageMapper, UserRepository userRepository) {
+    public ImageServiceImpl (ImageRepository imageRepository, UserRepository userRepository, Mapper mapper) {
         this.imageRepository = imageRepository;
-        this.imageMapper = imageMapper;
+        this.mapper = mapper;
         this.userRepository = userRepository;
     }
 
@@ -58,7 +58,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<ImageDTO> getAllItems () {
-        return imageRepository.findAll().stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
+        return imageRepository.findAll().stream().map(mapper::imageToImageDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ImageServiceImpl implements ImageService {
         if(image == null) {
             throw new EntityNotFoundException("Can't find requested Entity in Database!");
         }
-        return imageMapper.imageToImageDTO(image);
+        return mapper.imageToImageDTO(image);
     }
 
     @Override public List<ImageDTO> getFollowedImagesByUserAndLastId (String user, long lastId) throws EntityNotFoundException {
@@ -80,7 +80,7 @@ public class ImageServiceImpl implements ImageService {
         } else {
             lastId = 0;
         }
-        return imageRepository.findFollowingImagesByUserAndLastId(user, lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
+        return imageRepository.findFollowingImagesByUserAndLastId(user, lastId).stream().map(mapper::imageToImageDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ImageServiceImpl implements ImageService {
         } else {
             lastId = 0;
         }
-        return imageRepository.findImagesByUserAndLastId(user, lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
+        return imageRepository.findImagesByUserAndLastId(user, lastId).stream().map(mapper::imageToImageDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -105,7 +105,7 @@ public class ImageServiceImpl implements ImageService {
         } else {
             lastId = 0;
         }
-        return imageRepository.findImagesByLastId(lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
+        return imageRepository.findImagesByLastId(lastId).stream().map(mapper::imageToImageDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -137,7 +137,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<ImageDTO> getLikedImages (String user, long lastId) {
-        return imageRepository.findLikedImagesByUserAndLastId(user, lastId).stream().map(imageMapper::imageToImageDTO).collect(Collectors.toList());
+        return imageRepository.findLikedImagesByUserAndLastId(user, lastId).stream().map(mapper::imageToImageDTO).collect(Collectors.toList());
     }
 
     @Override

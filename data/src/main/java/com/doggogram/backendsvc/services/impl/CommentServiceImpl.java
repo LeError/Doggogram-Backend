@@ -3,7 +3,7 @@ package com.doggogram.backendsvc.services.impl;
 import com.doggogram.backendsvc.domain.Comment;
 import com.doggogram.backendsvc.domain.Image;
 import com.doggogram.backendsvc.dto.CommentDTO;
-import com.doggogram.backendsvc.mapper.CommentMapper;
+import com.doggogram.backendsvc.mapper.Mapper;
 import com.doggogram.backendsvc.repositories.CommentRepository;
 import com.doggogram.backendsvc.repositories.ImageRepository;
 import com.doggogram.backendsvc.repositories.UserRepository;
@@ -20,13 +20,13 @@ public class CommentServiceImpl implements CommentService {
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
-    private final CommentMapper commentMapper;
+    private final Mapper mapper;
 
-    public CommentServiceImpl (ImageRepository imageRepository, UserRepository userRepository, CommentRepository commentRepository, CommentMapper commentMapper) {
+    public CommentServiceImpl (ImageRepository imageRepository, UserRepository userRepository, CommentRepository commentRepository, Mapper mapper) {
         this.imageRepository = imageRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
-        this.commentMapper = commentMapper;
+        this.mapper = mapper;
     }
 
     @Override public Long count () {
@@ -34,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override public List<CommentDTO> getAllItems () {
-        return commentRepository.findAll().stream().map(commentMapper::commentToCommentDTO).collect(Collectors.toList());
+        return commentRepository.findAll().stream().map(mapper::commentToCommentDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -73,12 +73,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO getComment (long commentId) {
-        return commentMapper.commentToCommentDTO(commentRepository.findCommentById(commentId));
+        return mapper.commentToCommentDTO(commentRepository.findCommentById(commentId));
     }
 
     @Override
     public List<CommentDTO> getCommentsOfImage (long imageId) {
-        return commentRepository.findCommentsByImageId(imageId).stream().map(commentMapper::commentToCommentDTO).collect(Collectors.toList());
+        return commentRepository.findCommentsByImageId(imageId).stream().map(mapper::commentToCommentDTO).collect(Collectors.toList());
     }
 
     @Override

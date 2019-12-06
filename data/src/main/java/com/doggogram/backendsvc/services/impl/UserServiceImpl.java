@@ -2,7 +2,7 @@ package com.doggogram.backendsvc.services.impl;
 
 import com.doggogram.backendsvc.domain.User;
 import com.doggogram.backendsvc.dto.UserDTO;
-import com.doggogram.backendsvc.mapper.UserMapper;
+import com.doggogram.backendsvc.mapper.Mapper;
 import com.doggogram.backendsvc.repositories.UserRepository;
 import com.doggogram.backendsvc.services.UserService;
 import com.doggogram.backendsvc.util.Util;
@@ -19,24 +19,24 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private UserMapper userMapper;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final Mapper mapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl (UserRepository userRepository, Mapper mapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
+        this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
     }
     @Override
 
     public UserDTO findUserByUser (String user) {
-        return userMapper.userToUserDTO(userRepository.findUserByUser(user));
+        return mapper.userToUserDTO(userRepository.findUserByUser(user));
     }
 
     @Override public List<UserDTO> findUsersByUser (String user) {
         user += "%";
-        return userRepository.findUsersByUser(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        return userRepository.findUsersByUser(user).stream().map(mapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override public void registerUser (String user, String pass) {
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAllItems () {
-        return userRepository.findAll().stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(mapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getFollowers (String user) {
-        return userRepository.findFollowersByUser(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        return userRepository.findFollowersByUser(user).stream().map(mapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getFollowing (String user) {
-        return userRepository.findFollowingByUser(user).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        return userRepository.findFollowingByUser(user).stream().map(mapper::userToUserDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getImageLiker (long imageId) {
-        return userRepository.findLikerByImageId(imageId).stream().map(userMapper::userToUserDTO).collect(Collectors.toList());
+        return userRepository.findLikerByImageId(imageId).stream().map(mapper::userToUserDTO).collect(Collectors.toList());
     }
 
 }
