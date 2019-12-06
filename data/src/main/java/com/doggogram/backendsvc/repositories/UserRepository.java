@@ -36,6 +36,12 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query (value = "SELECT * FROM `USER` AS U, IMAGE I WHERE I.IMAGE_ID = ?1 AND U.USER_NAME = FK_USER", nativeQuery = true)
     User findOwnerByImageId(Long imageId);
 
+    @Query (value = "SELECT USER_NAME FROM `USER` AS U, IMAGE I WHERE I.IMAGE_ID = ?1 AND U.USER_NAME = FK_USER", nativeQuery = true)
+    String findOwnerUserByImageId(Long imageId);
+
+    @Query (value = "SELECT USER_IMAGE FROM `USER` AS U, IMAGE I WHERE I.IMAGE_ID = ?1 AND U.USER_NAME = FK_USER", nativeQuery = true)
+    String findOwnerUserImageByImageId(Long imageId);
+
     @Query (value = "SELECT * FROM `USER` AS U, IMAGE_LIKED_BY AS ILB WHERE ILB.FK_IMAGE = ?1 AND U.USER_NAME = ILB.FK_USER", nativeQuery = true)
     List<User> findLikerByImageId(Long imageId);
 
