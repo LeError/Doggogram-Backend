@@ -149,4 +149,10 @@ public class UserController {
         return new ResponseEntity<>(new UserListDTO(userService.getImageLiker(imageId)), HttpStatus.OK);
     }
 
+    @GetMapping ({"/user/image", "/user/image/"})
+    public ResponseEntity<String> getUserImage(@RequestHeader (value = "Authorization") String auth) {
+        String user = jwtTokenService.getUserFromToken(Util.getJwtToken(auth));
+        return new ResponseEntity<>(userService.getUserImage(user), HttpStatus.OK);
+    }
+
 }
