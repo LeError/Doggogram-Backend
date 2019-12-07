@@ -37,6 +37,8 @@ Version one of the API features a total of 39 Endpoints with two mappings each (
 | {host}/api/v1/users/image/remove/                | POST      | true           | UserController    | V1        |
 | {host}/api/v1/users/images/liker/{imageId}       | GET       | true           | UserController    | V1        |
 | {host}/api/v1/users/images/liker/{imageId}/      | GET       | true           | UserController    | V1        |
+| {host}/api/v1/users/user/image                   | GET       | true           | UserController    | V1        |
+| {host}/api/v1/users/user/image/                  | GET       | true           | UserController    | V1        |
 | {host}/api/v1/auth/login                         | POST      | false          | AuthController    | V1        |
 | {host}/api/v1/auth/login/                        | POST      | false          | AuthController    | V1        |
 | {host}/api/v1/images/$count                      | GET       | true           | ImageController   | V1        |
