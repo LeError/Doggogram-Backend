@@ -128,4 +128,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findLikerByImageId(imageId).stream().map(mapper::userToUserDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public String getUserImage (String user) {
+        return userRepository.findUserImageByUser(user);
+    }
+
 }
