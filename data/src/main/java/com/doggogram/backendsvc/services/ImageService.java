@@ -22,9 +22,6 @@ public interface ImageService extends RestService<List<ImageDTO>> {
     boolean isImageLikedBy(String user, long imageId) throws EntityNotFoundException;
     Long getImageLikes(long imageId) throws EntityNotFoundException;
     List<ImageDTO> getLikedImages(String user, long lastId);
-    void updateTitle(String user, String content, long imageId)
-    throws ImageOwnershipException;
-    void updateBio(String user, String content, long imageId)
-    throws ImageOwnershipException;
-
+    void updateTitle(String user, String content, long imageId) throws ImageOwnershipException;
+    void updateBio(String user, String content, long imageId) throws ImageOwnershipException;
 }
