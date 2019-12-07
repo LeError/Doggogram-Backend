@@ -77,8 +77,6 @@ public class ImageServiceImpl implements ImageService {
         if(lastId <= 0) {
             if(imageRepository.findMaxId() != null)
                 lastId = imageRepository.findMaxId() + 1;
-        } else {
-            lastId = 0;
         }
         return imageRepository.findFollowingImagesByUserAndLastId(user, lastId).stream().map(mapper::imageToImageDTO).collect(Collectors.toList());
     }
@@ -91,8 +89,6 @@ public class ImageServiceImpl implements ImageService {
         if(lastId <= 0) {
             if(imageRepository.findMaxId() != null)
             lastId = imageRepository.findMaxId() + 1;
-        } else {
-            lastId = 0;
         }
         return imageRepository.findImagesByUserAndLastId(user, lastId).stream().map(mapper::imageToImageDTO).collect(Collectors.toList());
     }
@@ -102,8 +98,6 @@ public class ImageServiceImpl implements ImageService {
         if(lastId <= 0) {
             if(imageRepository.findMaxId() != null)
                 lastId = imageRepository.findMaxId() + 1;
-        } else {
-            lastId = 0;
         }
         return imageRepository.findImagesByLastId(lastId).stream().map(mapper::imageToImageDTO).collect(Collectors.toList());
     }
