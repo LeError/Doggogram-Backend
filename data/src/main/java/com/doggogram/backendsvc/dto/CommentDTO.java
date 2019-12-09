@@ -9,7 +9,6 @@ public class CommentDTO {
 
     private Long id;
     private String user;
-    private String userImage;
     private String comment;
     private Date created;
 

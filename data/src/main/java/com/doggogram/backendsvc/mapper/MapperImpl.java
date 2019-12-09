@@ -53,7 +53,6 @@ public class MapperImpl implements Mapper {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(comment.getId());
         commentDTO.setUser(comment.getAuthor().getUser());
-        commentDTO.setUserImage(comment.getAuthor().getUserImage());
         commentDTO.setComment(comment.getComment());
         commentDTO.setCreated(comment.getCreated());
         return commentDTO;
