@@ -24,4 +24,5 @@ public interface ImageService extends RestService<List<ImageDTO>> {
     List<ImageDTO> getLikedImages(String user, long lastId);
     void updateTitle(String user, String content, long imageId) throws ImageOwnershipException;
     void updateBio(String user, String content, long imageId) throws ImageOwnershipException;
+    Long countUserImages(String user);
 }
