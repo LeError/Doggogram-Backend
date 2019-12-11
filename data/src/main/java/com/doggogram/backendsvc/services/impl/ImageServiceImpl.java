@@ -156,7 +156,8 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 
-    @Override public Long countUserImages (String user) {
+    @Override
+    public Long countUserImages (String user) {
         return imageRepository.countUserImages(user);
     }
 
