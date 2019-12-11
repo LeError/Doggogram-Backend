@@ -134,4 +134,9 @@ public class ImageController {
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
+    @GetMapping ({"/$count/{user}", "/$count/{user}/"})
+    public ResponseEntity<Long> getCountUserImages(@PathVariable String user) {
+        return new ResponseEntity<>(imageService.countUserImages(user), HttpStatus.OK);
+    }
+
 }
