@@ -26,6 +26,10 @@ Install a IDE if your choice in my case [IntelliJ IDEA](https://www.jetbrains.co
 https://github.com/LeError/Doggogram-Backend
 ```
 
+## Documentation
+
+A list of Endpoints that the Backend provides can be found in [List.md](files/doc/endpoints/List.md). In the [doc](files/doc/endpoints/) directory can also detail documentation to the different controller be found and the details of the corrosponding endpoints.
+
 ## Test Environment
 
 * The test environment is a Debian (x64) Linux Server
@@ -35,7 +39,7 @@ https://github.com/LeError/Doggogram-Backend
   * 1 IP-Adress: http://88.214.57.214/
 * The Application is Configured as systemd Service
   * The configuration script can be found in the [Service File](files/debian/doggogramsvc.service)
-  * The Application is able to run on differen environments even on cloud PaaS (when cloud dependencies are added)
+  * The Application is able to run on different environments even on cloud PaaS (when cloud dependencies are added)
 * The Database that is used in the test scenario is MariaDB
   * Dialect: MySQL
   * Hosted on the same test environment
