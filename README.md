@@ -56,10 +56,25 @@ https://github.com/LeError/Doggogram-Backend
 ## Built With
 
 * [Spring Boot](https://spring.io/projects/spring-boot)
+  * [Spring Security](https://github.com/spring-projects/spring-security)
+  * [Spring Boot Starter Web](https://github.com/spring-projects/spring-boot)
+  * [Spring Boot Starter Test](https://github.com/spring-projects/spring-boot)
+  * [Spring Boot Starter Security](https://github.com/spring-projects/spring-boot)
+  * [Spring Boot Starter DATA JPA](https://github.com/spring-projects/spring-boot)
 * [Apache commons IO](https://commons.apache.org/proper/commons-io/)
 * [Google Guava](https://github.com/google/guava)
-* [JJWT](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt)
-* [MariaDB Java Client](https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client)
+* [JJWT](https://github.com/nzoudy/JSON-Web-Token)
+* [MariaDB Java Client](https://github.com/mariadb-corporation/mariadb-connector-j)
+* [Tomcat Embed Core](https://github.com/apache/tomcat)
+* [Project Lombok](https://github.com/rzwitserloot/lombok)
+* [Mapstruct](https://github.com/mapstruct/mapstruct)
+
+### Maven Plugins
+
+* [Maven Surefire](https://github.com/apache/maven-surefire)
+* [Maven Compiler Plugin](https://github.com/apache/maven-plugins)
+* [Maven Release Plugin](https://github.com/mengshijian/mavenreleaseplugin)
+* [Spring Boot Maven Plugin](https://github.com/spring-projects/spring-boot)
 
 ## Authors
 
