@@ -26,6 +26,10 @@
         <org.mapstruct.version>1.2.0.CR2</org.mapstruct.version>
     </properties>
 
+    <scm>
+        <developerConnection>scm:svn:https://github.com/LeError/Doggogram-Backend</developerConnection>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
