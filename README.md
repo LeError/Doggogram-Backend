@@ -60,7 +60,7 @@ https://github.com/LeError/Doggogram-Backend
   * [Spring Boot Starter Web](https://github.com/spring-projects/spring-boot)
   * [Spring Boot Starter Test](https://github.com/spring-projects/spring-boot)
   * [Spring Boot Starter Security](https://github.com/spring-projects/spring-boot)
-  * [Spring Boot Starter DATA JPA](https://github.com/spring-projects/spring-boot)
+  * [Spring Boot Starter Data Jpa](https://github.com/spring-projects/spring-boot)
 * [Apache commons IO](https://commons.apache.org/proper/commons-io/)
 * [Google Guava](https://github.com/google/guava)
 * [JJWT](https://github.com/nzoudy/JSON-Web-Token)
