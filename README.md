@@ -39,7 +39,7 @@ A list of Endpoints that the Backend provides can be found in [List.md](files/do
   * 1 IP-Adress: http://88.214.57.214/
 * The Application is Configured as systemd Service
   * The configuration script can be found in the [Service File](files/debian/doggogramsvc.service)
-  * The Application is able to run on differen environments even on cloud PaaS (when cloud dependencies are added)
+  * The Application is able to run on different environments even on cloud PaaS (when cloud dependencies are added)
 * The Database that is used in the test scenario is MariaDB
   * Dialect: MySQL
   * Hosted on the same test environment
