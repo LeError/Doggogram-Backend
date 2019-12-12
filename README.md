@@ -26,6 +26,10 @@ Install a IDE if your choice in my case [IntelliJ IDEA](https://www.jetbrains.co
 https://github.com/LeError/Doggogram-Backend
 ```
 
+## Documentation
+
+A list of Endpoints that the Backend provides can be found in [List.md](files/doc/endpoints/List.md). In the [doc](files/doc/endpoints/) directory can also detail documentation to the different controller be found and the details of the corrosponding endpoints.
+
 ## Test Environment
 
 * The test environment is a Debian (x64) Linux Server
