@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+/data/pom.xml.releaseBackup
+/web/pom.xml.releaseBackup
+/pom.xml.releaseBackup
