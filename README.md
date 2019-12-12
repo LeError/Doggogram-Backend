@@ -14,7 +14,7 @@ These instructions will explain how to get this project into IntelliJ IDEA
 
 Install a IDE if your choice in my case [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 
-### Installing
+### Installation for Development
 
 * In the IntelliJ IDEA splash screen select Check out from Version Control
 * In the dropdown menu select git 
