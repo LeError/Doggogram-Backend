@@ -20,11 +20,28 @@ Install a IDE if your choice in my case [IntelliJ IDEA](https://www.jetbrains.co
 * In the dropdown menu select git 
 * In the dialog that opend enter the url of this reposetory as seen below and choose clone
 * In the upcoming dialogs just press next and your done
-* Now you have to import the libaries listed below to run the project
+* Apply that you want to Import the Project via Pom
 
 ```
 https://github.com/LeError/Doggogram-Backend
 ```
+
+### Test Environment
+
+* The test environment is a Debian (x64) Linux Server
+  * 2 CPU Cores
+  * 2 GB RAM
+  * 25 GB Storage
+  * 1 IP-Adress: http://88.214.57.214/
+* The Application is Configured as systemd Service
+  * The configuration script can be found in the [Service File](files/debian/doggogramsvc.service)
+  * The Application is able to run on differen environments even on cloud PaaS (when cloud dependencies are added)
+* The Database that is used in the test scenario is MariaDB
+  * Dialect: MySQL
+  * Hosted on the same test environment
+* The [Frontend](https://github.com/xSpeed1337/Doggogram-Frontend) is also hosted on the the test evirnonment 
+  * Develeoped with HTML, CSS and JavaScript
+  * It is exposed to the Internet via a Apache installation with PHP configured
 
 ## Built With
 
