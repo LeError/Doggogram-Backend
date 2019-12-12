@@ -134,7 +134,7 @@ In the body should be contained (form-data):
 
 | Label            | Typ                         |
 | ---------------- | --------------------------- |
-| user             | text                        |
+| followUser       | text                        |
 
 #### Get Username Endpoint
 
