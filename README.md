@@ -26,7 +26,7 @@ Install a IDE if your choice in my case [IntelliJ IDEA](https://www.jetbrains.co
 https://github.com/LeError/Doggogram-Backend
 ```
 
-### Test Environment
+## Test Environment
 
 * The test environment is a Debian (x64) Linux Server
   * 2 CPU Cores
@@ -42,6 +42,16 @@ https://github.com/LeError/Doggogram-Backend
 * The [Frontend](https://github.com/xSpeed1337/Doggogram-Frontend) is also hosted on the the test evirnonment 
   * Develeoped with HTML, CSS and JavaScript
   * It is exposed to the Internet via a Apache installation with PHP configured
+  
+## Used Technologies
+
+* Java
+* HTTP-Protocol
+* MySQL
+* JSON
+* XML
+* Maven
+* Embedded Tomcat
 
 ## Built With
 
