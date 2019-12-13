@@ -1,6 +1,7 @@
 package com.doggogram.backendsvc.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -43,6 +44,7 @@ public class User {
     @JoinColumn (name = "FK_USER")
     private Set<Image> images;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable (name = "USER_FOLLOWING", joinColumns = { @JoinColumn (name = "FK_USER") }, inverseJoinColumns = { @JoinColumn (name = "FK_FOLLOWING") })
     private Set<User> following;
